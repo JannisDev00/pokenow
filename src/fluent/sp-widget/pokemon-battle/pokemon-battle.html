@@ -1,0 +1,377 @@
+<div class="panel panel-default sp-card pokemon-battle-widget">
+    <div class="panel-heading sp-card-header">
+        <h3 class="panel-title sp-card-title">Pokemon Battle Simulator</h3>
+    </div>
+    <div class="panel-body sp-card-body">
+
+        <div class="pokemon-battle-mode-select" ng-if="!c.mode">
+            <button type="button" class="btn btn-primary pokemon-battle-mode-btn" ng-click="c.selectMode('1v1')">1 vs 1</button>
+            <button type="button" class="btn btn-primary pokemon-battle-mode-btn" ng-click="c.selectMode('4v4')">4 vs 4</button>
+        </div>
+
+        <div class="sp-alert sp-alert-danger" ng-if="c.errorMsg" role="alert">
+            {{c.errorMsg}}
+        </div>
+
+        <!-- ==================== 1v1 ==================== -->
+        <div ng-if="c.mode === '1v1'">
+            <div class="pokemon-battle-back" ng-if="!c.started">
+                <button type="button" class="btn btn-link pokemon-battle-back-btn" ng-click="c.backToModeSelect()">&larr; Change mode</button>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-5">
+                    <label for="pokemon-battle-a">Your Pokemon</label>
+                    <select id="pokemon-battle-a" class="form-control" ng-model="c.pokemonA" ng-disabled="c.started">
+                        <option value="">-- choose --</option>
+                        <option ng-repeat="p in c.data.pokemonList track by p.sys_id" value="{{p.sys_id}}">{{p.name}}</option>
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-2 pokemon-battle-vs">
+                    <strong>VS</strong>
+                </div>
+                <div class="col-xs-12 col-sm-5">
+                    <label for="pokemon-battle-b">Opponent</label>
+                    <select id="pokemon-battle-b" class="form-control" ng-model="c.pokemonB" ng-disabled="c.started">
+                        <option value="">-- choose --</option>
+                        <option ng-repeat="p in c.data.pokemonList track by p.sys_id" value="{{p.sys_id}}">{{p.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="pokemon-battle-actions" ng-if="!c.started">
+                <button type="button" class="btn btn-primary" ng-click="c.startBattle()" ng-disabled="!c.canStart()">
+                    <span ng-if="!c.loading">Start Battle!</span>
+                    <span ng-if="c.loading">Fetching moves...</span>
+                </button>
+            </div>
+
+            <div class="pokemon-battle-result" ng-if="c.result">
+                <div class="row">
+                    <div class="col-xs-6 pokemon-battle-card" ng-class="{'pokemon-battle-winner': c.winner === c.result.a.name}">
+                        <img ng-if="c.result.a.sprite" ng-src="{{c.result.a.sprite}}" class="pokemon-battle-sprite" alt="{{c.result.a.name}}">
+                        <h4>{{c.result.a.name}}</h4>
+                        <div class="pokemon-battle-record">{{c.aRecord.wins}}W - {{c.aRecord.losses}}L</div>
+                        <div class="pokemon-battle-types">
+                            <span class="sp-badge sp-badge-info" ng-repeat="t in c.result.a.types track by t">{{t}}</span>
+                        </div>
+                        <div class="progress pokemon-battle-hp">
+                            <div class="progress-bar" ng-class="c.hpBarClass(c.hpA, c.maxHpA)" ng-style="{width: c.hpPercent(c.hpA, c.maxHpA) + '%'}">
+                                {{c.hpA}} / {{c.maxHpA}} HP
+                            </div>
+                        </div>
+                        <div class="pokemon-battle-status" ng-if="c.statusLabel(c.statusA) || c.confusionA.turnsRemaining > 0">
+                            <span class="sp-badge sp-badge-warning" ng-if="c.statusLabel(c.statusA)">{{c.statusLabel(c.statusA)}}</span>
+                            <span class="sp-badge sp-badge-warning" ng-if="c.confusionA.turnsRemaining > 0">Confused</span>
+                        </div>
+                        <div class="pokemon-battle-move-buttons">
+                            <button type="button"
+                                    class="btn btn-default pokemon-battle-move-btn"
+                                    ng-repeat="m in c.result.a.moves track by m.name"
+                                    ng-click="c.chooseMove(m)"
+                                    ng-disabled="c.turnBusy || c.winner">
+                                {{m.name}}
+                                <span class="pokemon-battle-move-meta">{{m.typeName}} &middot; {{m.damageClass}} &middot; {{m.power}} pwr</span>
+                            </button>
+                        </div>
+                        <div class="pokemon-battle-item" ng-if="c.itemA">
+                            <button type="button"
+                                    class="btn btn-default pokemon-battle-item-btn"
+                                    ng-click="c.useItem()"
+                                    ng-disabled="c.turnBusy || c.winner || c.itemAUsed || c.itemA.kind !== 'heal'">
+                                Use {{c.itemA.name}}<span ng-if="c.itemAUsed"> (used)</span>
+                                <span class="pokemon-battle-move-meta">{{c.itemA.effectText}}</span>
+                            </button>
+                            <div class="pokemon-battle-item-note" ng-if="c.itemA.kind !== 'heal'">Revival items can't be used in 1v1 - there's no bench to revive.</div>
+                        </div>
+                        <div class="pokemon-battle-history" ng-if="c.aRecord.recentBattles.length">
+                            <div class="pokemon-battle-history-title">Last battles</div>
+                            <div class="pokemon-battle-history-entry" ng-repeat="h in c.aRecord.recentBattles track by $index">
+                                vs {{h.opponent}} - {{h.result}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 pokemon-battle-card" ng-class="{'pokemon-battle-winner': c.winner === c.result.b.name}">
+                        <img ng-if="c.result.b.sprite" ng-src="{{c.result.b.sprite}}" class="pokemon-battle-sprite" alt="{{c.result.b.name}}">
+                        <h4>{{c.result.b.name}}</h4>
+                        <div class="pokemon-battle-record">{{c.bRecord.wins}}W - {{c.bRecord.losses}}L</div>
+                        <div class="pokemon-battle-types">
+                            <span class="sp-badge sp-badge-info" ng-repeat="t in c.result.b.types track by t">{{t}}</span>
+                        </div>
+                        <div class="progress pokemon-battle-hp">
+                            <div class="progress-bar" ng-class="c.hpBarClass(c.hpB, c.maxHpB)" ng-style="{width: c.hpPercent(c.hpB, c.maxHpB) + '%'}">
+                                {{c.hpB}} / {{c.maxHpB}} HP
+                            </div>
+                        </div>
+                        <div class="pokemon-battle-status" ng-if="c.statusLabel(c.statusB) || c.confusionB.turnsRemaining > 0">
+                            <span class="sp-badge sp-badge-warning" ng-if="c.statusLabel(c.statusB)">{{c.statusLabel(c.statusB)}}</span>
+                            <span class="sp-badge sp-badge-warning" ng-if="c.confusionB.turnsRemaining > 0">Confused</span>
+                        </div>
+                        <div class="pokemon-battle-move-list">
+                            <span class="sp-badge sp-badge-default" ng-repeat="m in c.result.b.moves track by m.name">
+                                {{m.name}} ({{m.typeName}}, {{m.power}} pwr)
+                            </span>
+                        </div>
+                        <div class="pokemon-battle-item" ng-if="c.itemB">
+                            <span class="sp-badge sp-badge-default">{{c.itemB.name}}<span ng-if="c.itemBUsed"> (used)</span></span>
+                        </div>
+                        <div class="pokemon-battle-history" ng-if="c.bRecord.recentBattles.length">
+                            <div class="pokemon-battle-history-title">Last battles</div>
+                            <div class="pokemon-battle-history-entry" ng-repeat="h in c.bRecord.recentBattles track by $index">
+                                vs {{h.opponent}} - {{h.result}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pokemon-battle-log" ng-if="c.battleLog.length">
+                    <div class="pokemon-battle-log-entry" ng-repeat="entry in c.battleLog track by $index">
+                        <span ng-if="entry.itemUsed">
+                            Round {{entry.round}}: {{entry.attackerName}} used {{entry.itemName}}!
+                            <span ng-if="entry.healed !== undefined">Healed {{entry.healed}} HP.</span>
+                        </span>
+                        <span ng-if="entry.statusBlocked === 'sleep'">Round {{entry.round}}: {{entry.attackerName}} is fast asleep!</span>
+                        <span ng-if="entry.statusBlocked === 'freeze'">Round {{entry.round}}: {{entry.attackerName}} is frozen solid!</span>
+                        <span ng-if="entry.statusBlocked === 'paralysis'">Round {{entry.round}}: {{entry.attackerName}} is paralyzed and can't move!</span>
+                        <span ng-if="entry.confusionSelfHit">Round {{entry.round}}: {{entry.attackerName}} is confused and hurt itself! {{entry.damage}} damage.</span>
+                        <span ng-if="entry.statusDamage">Round {{entry.round}}: {{entry.attackerName}} is hurt by {{entry.statusDamage}}! {{entry.damage}} damage.</span>
+                        <span ng-if="!entry.itemUsed && !entry.statusBlocked && !entry.confusionSelfHit && !entry.statusDamage && entry.hit">
+                            Round {{entry.round}}: {{entry.attackerName}} used {{entry.move}} - {{entry.damage}} damage
+                            <span ng-if="entry.effectiveness === 'super'">(super effective!)</span>
+                            <span ng-if="entry.effectiveness === 'weak'">(not very effective)</span>
+                            <span ng-if="entry.effectiveness === 'immune'">(no effect!)</span>
+                            <span ng-if="entry.ailmentInflicted"> The opponent was {{c.ailmentLabel(entry.ailmentInflicted).toLowerCase()}}!</span>
+                            <span ng-if="entry.fainted"> - fainted!</span>
+                        </span>
+                        <span ng-if="!entry.itemUsed && !entry.statusBlocked && !entry.confusionSelfHit && !entry.statusDamage && !entry.hit">
+                            Round {{entry.round}}: {{entry.attackerName}} used {{entry.move}} - missed!
+                        </span>
+                    </div>
+                </div>
+
+                <div class="pokemon-battle-winner-banner" ng-if="c.winner && c.winner !== 'Tie'">
+                    {{c.winner}} wins!
+                </div>
+                <div class="pokemon-battle-winner-banner" ng-if="c.winner === 'Tie'">
+                    It's a tie!
+                </div>
+
+                <div class="pokemon-battle-actions" ng-if="c.winner">
+                    <button type="button" class="btn btn-default" ng-click="c.newBattle()">Battle Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 4v4 ==================== -->
+        <div ng-if="c.mode === '4v4'">
+
+            <div ng-if="!c.teamControlMode">
+                <div class="pokemon-battle-back">
+                    <button type="button" class="btn btn-link pokemon-battle-back-btn" ng-click="c.backToModeSelect()">&larr; Change mode</button>
+                </div>
+                <div class="pokemon-battle-mode-select">
+                    <button type="button" class="btn btn-primary pokemon-battle-mode-btn" ng-click="c.selectTeamControlMode('ai')">Vs AI</button>
+                    <button type="button" class="btn btn-primary pokemon-battle-mode-btn" ng-click="c.selectTeamControlMode('manual')">Both teams by me</button>
+                </div>
+            </div>
+
+            <div ng-if="c.teamControlMode && !c.started">
+                <div class="pokemon-battle-back">
+                    <button type="button" class="btn btn-link pokemon-battle-back-btn" ng-click="c.backToControlModeSelect()">&larr; Back</button>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="pokemon-battle-team-header">
+                            <span>Team A</span>
+                            <button type="button" class="btn btn-xs btn-default" ng-click="c.randomizeTeam('A')">Randomize</button>
+                        </div>
+                        <select class="form-control pokemon-battle-team-select" ng-repeat="n in [0,1,2,3] track by n" ng-model="c.teamA[n]">
+                            <option value="">-- choose --</option>
+                            <option ng-repeat="p in c.data.pokemonList track by p.sys_id" value="{{p.sys_id}}">{{p.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="pokemon-battle-team-header">
+                            <span>Team B <span ng-if="c.teamControlMode === 'ai'">(AI)</span></span>
+                            <button type="button" class="btn btn-xs btn-default" ng-click="c.randomizeTeam('B')">Randomize</button>
+                        </div>
+                        <select class="form-control pokemon-battle-team-select" ng-repeat="n in [0,1,2,3] track by n" ng-model="c.teamB[n]">
+                            <option value="">-- choose --</option>
+                            <option ng-repeat="p in c.data.pokemonList track by p.sys_id" value="{{p.sys_id}}">{{p.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pokemon-battle-actions">
+                    <button type="button" class="btn btn-primary" ng-click="c.startTeamBattle()" ng-disabled="!c.canStartTeamBattle()">
+                        <span ng-if="!c.loading">Start Team Battle!</span>
+                        <span ng-if="c.loading">Fetching movesets...</span>
+                    </button>
+                </div>
+            </div>
+
+            <div ng-if="c.started && c.teamResult">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 pokemon-battle-team-panel">
+                        <h4>Team A</h4>
+                        <div class="pokemon-battle-roster">
+                            <div class="pokemon-battle-roster-slot"
+                                 ng-repeat="m in c.teamResult.teamA track by m.sys_id"
+                                 ng-class="{'pokemon-battle-roster-active': $index === c.activeA, 'pokemon-battle-roster-fainted': c.hpArrA[$index] <= 0}">
+                                <img ng-if="m.sprite" ng-src="{{m.sprite}}" alt="{{m.name}}">
+                                <div class="pokemon-battle-roster-name">{{m.name}}</div>
+                            </div>
+                        </div>
+
+                        <div class="pokemon-battle-card" ng-class="{'pokemon-battle-winner': c.teamWinner === 'A'}">
+                            <img ng-if="c.teamResult.teamA[c.activeA].sprite" ng-src="{{c.teamResult.teamA[c.activeA].sprite}}" class="pokemon-battle-sprite" alt="{{c.teamResult.teamA[c.activeA].name}}">
+                            <h4>{{c.teamResult.teamA[c.activeA].name}}</h4>
+                            <div class="pokemon-battle-types">
+                                <span class="sp-badge sp-badge-info" ng-repeat="t in c.teamResult.teamA[c.activeA].types track by t">{{t}}</span>
+                            </div>
+                            <div class="progress pokemon-battle-hp">
+                                <div class="progress-bar"
+                                     ng-class="c.hpBarClass(c.hpArrA[c.activeA], c.teamResult.teamA[c.activeA].maxHp)"
+                                     ng-style="{width: c.hpPercent(c.hpArrA[c.activeA], c.teamResult.teamA[c.activeA].maxHp) + '%'}">
+                                    {{c.hpArrA[c.activeA]}} / {{c.teamResult.teamA[c.activeA].maxHp}} HP
+                                </div>
+                            </div>
+                            <div class="pokemon-battle-status" ng-if="c.statusLabel(c.statusA) || c.confusionA.turnsRemaining > 0">
+                                <span class="sp-badge sp-badge-warning" ng-if="c.statusLabel(c.statusA)">{{c.statusLabel(c.statusA)}}</span>
+                                <span class="sp-badge sp-badge-warning" ng-if="c.confusionA.turnsRemaining > 0">Confused</span>
+                            </div>
+                            <div class="pokemon-battle-move-buttons">
+                                <button type="button"
+                                        class="btn btn-default pokemon-battle-move-btn"
+                                        ng-repeat="m in c.teamResult.teamA[c.activeA].moves track by m.name"
+                                        ng-click="c.chooseTeamMove('A', m)"
+                                        ng-disabled="c.teamTurnBusy || c.teamWinner || (c.selectedMoveA && c.teamControlMode === 'manual')">
+                                    {{m.name}}
+                                    <span class="pokemon-battle-move-meta">{{m.typeName}} &middot; {{m.damageClass}} &middot; {{m.power}} pwr</span>
+                                </button>
+                            </div>
+                            <div class="pokemon-battle-move-picked" ng-if="c.selectedMoveA && c.teamControlMode === 'manual' && !c.teamTurnBusy">
+                                Picked: {{c.selectedMoveA.name}} - waiting for Team B...
+                            </div>
+                            <div class="pokemon-battle-item" ng-if="c.teamItemA">
+                                <button type="button"
+                                        class="btn btn-default pokemon-battle-item-btn"
+                                        ng-click="c.useTeamItem('A')"
+                                        ng-disabled="c.teamTurnBusy || c.teamWinner || c.teamItemAUsed || (c.itemChosenA && c.teamControlMode === 'manual')">
+                                    Use {{c.teamItemA.name}}<span ng-if="c.teamItemAUsed"> (used)</span>
+                                    <span class="pokemon-battle-move-meta">{{c.teamItemA.effectText}}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 pokemon-battle-team-panel">
+                        <h4>Team B <span ng-if="c.teamControlMode === 'ai'">(AI)</span></h4>
+                        <div class="pokemon-battle-roster">
+                            <div class="pokemon-battle-roster-slot"
+                                 ng-repeat="m in c.teamResult.teamB track by m.sys_id"
+                                 ng-class="{'pokemon-battle-roster-active': $index === c.activeB, 'pokemon-battle-roster-fainted': c.hpArrB[$index] <= 0}">
+                                <img ng-if="m.sprite" ng-src="{{m.sprite}}" alt="{{m.name}}">
+                                <div class="pokemon-battle-roster-name">{{m.name}}</div>
+                            </div>
+                        </div>
+
+                        <div class="pokemon-battle-card" ng-class="{'pokemon-battle-winner': c.teamWinner === 'B'}">
+                            <img ng-if="c.teamResult.teamB[c.activeB].sprite" ng-src="{{c.teamResult.teamB[c.activeB].sprite}}" class="pokemon-battle-sprite" alt="{{c.teamResult.teamB[c.activeB].name}}">
+                            <h4>{{c.teamResult.teamB[c.activeB].name}}</h4>
+                            <div class="pokemon-battle-types">
+                                <span class="sp-badge sp-badge-info" ng-repeat="t in c.teamResult.teamB[c.activeB].types track by t">{{t}}</span>
+                            </div>
+                            <div class="progress pokemon-battle-hp">
+                                <div class="progress-bar"
+                                     ng-class="c.hpBarClass(c.hpArrB[c.activeB], c.teamResult.teamB[c.activeB].maxHp)"
+                                     ng-style="{width: c.hpPercent(c.hpArrB[c.activeB], c.teamResult.teamB[c.activeB].maxHp) + '%'}">
+                                    {{c.hpArrB[c.activeB]}} / {{c.teamResult.teamB[c.activeB].maxHp}} HP
+                                </div>
+                            </div>
+                            <div class="pokemon-battle-status" ng-if="c.statusLabel(c.statusB) || c.confusionB.turnsRemaining > 0">
+                                <span class="sp-badge sp-badge-warning" ng-if="c.statusLabel(c.statusB)">{{c.statusLabel(c.statusB)}}</span>
+                                <span class="sp-badge sp-badge-warning" ng-if="c.confusionB.turnsRemaining > 0">Confused</span>
+                            </div>
+
+                            <div class="pokemon-battle-move-buttons" ng-if="c.teamControlMode === 'manual'">
+                                <button type="button"
+                                        class="btn btn-default pokemon-battle-move-btn"
+                                        ng-repeat="m in c.teamResult.teamB[c.activeB].moves track by m.name"
+                                        ng-click="c.chooseTeamMove('B', m)"
+                                        ng-disabled="c.teamTurnBusy || c.teamWinner || c.selectedMoveB">
+                                    {{m.name}}
+                                    <span class="pokemon-battle-move-meta">{{m.typeName}} &middot; {{m.damageClass}} &middot; {{m.power}} pwr</span>
+                                </button>
+                            </div>
+                            <div class="pokemon-battle-move-picked" ng-if="c.selectedMoveB && !c.teamTurnBusy">
+                                Picked: {{c.selectedMoveB.name}} - waiting for Team A...
+                            </div>
+                            <div class="pokemon-battle-item" ng-if="c.teamItemB && c.teamControlMode === 'manual'">
+                                <button type="button"
+                                        class="btn btn-default pokemon-battle-item-btn"
+                                        ng-click="c.useTeamItem('B')"
+                                        ng-disabled="c.teamTurnBusy || c.teamWinner || c.teamItemBUsed || c.itemChosenB">
+                                    Use {{c.teamItemB.name}}<span ng-if="c.teamItemBUsed"> (used)</span>
+                                    <span class="pokemon-battle-move-meta">{{c.teamItemB.effectText}}</span>
+                                </button>
+                            </div>
+
+                            <div class="pokemon-battle-move-list" ng-if="c.teamControlMode === 'ai'">
+                                <span class="sp-badge sp-badge-default" ng-repeat="m in c.teamResult.teamB[c.activeB].moves track by m.name">
+                                    {{m.name}} ({{m.typeName}}, {{m.power}} pwr)
+                                </span>
+                            </div>
+                            <div class="pokemon-battle-item" ng-if="c.teamItemB && c.teamControlMode === 'ai'">
+                                <span class="sp-badge sp-badge-default">{{c.teamItemB.name}}<span ng-if="c.teamItemBUsed"> (used)</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pokemon-battle-log" ng-if="c.battleLog.length">
+                    <div class="pokemon-battle-log-entry" ng-repeat="entry in c.battleLog track by $index">
+                        <span ng-if="entry.switchMessage">{{entry.text}}</span>
+                        <span ng-if="!entry.switchMessage && entry.itemUsed">
+                            Round {{entry.round}}: {{entry.attackerName}} used {{entry.itemName}}!
+                            <span ng-if="entry.healed !== undefined">Healed {{entry.healed}} HP.</span>
+                            <span ng-if="entry.revivedIndexes && entry.revivedIndexes.length">Revived a fainted teammate!</span>
+                            <span ng-if="entry.revivedIndexes && !entry.revivedIndexes.length">But nothing happened.</span>
+                        </span>
+                        <span ng-if="!entry.switchMessage && entry.statusBlocked === 'sleep'">Round {{entry.round}}: {{entry.attackerName}} is fast asleep!</span>
+                        <span ng-if="!entry.switchMessage && entry.statusBlocked === 'freeze'">Round {{entry.round}}: {{entry.attackerName}} is frozen solid!</span>
+                        <span ng-if="!entry.switchMessage && entry.statusBlocked === 'paralysis'">Round {{entry.round}}: {{entry.attackerName}} is paralyzed and can't move!</span>
+                        <span ng-if="!entry.switchMessage && entry.confusionSelfHit">Round {{entry.round}}: {{entry.attackerName}} is confused and hurt itself! {{entry.damage}} damage.</span>
+                        <span ng-if="!entry.switchMessage && entry.statusDamage">Round {{entry.round}}: {{entry.attackerName}} is hurt by {{entry.statusDamage}}! {{entry.damage}} damage.</span>
+                        <span ng-if="!entry.switchMessage && !entry.itemUsed && !entry.statusBlocked && !entry.confusionSelfHit && !entry.statusDamage && entry.hit">
+                            Round {{entry.round}}: {{entry.attackerName}} used {{entry.move}} - {{entry.damage}} damage
+                            <span ng-if="entry.effectiveness === 'super'">(super effective!)</span>
+                            <span ng-if="entry.effectiveness === 'weak'">(not very effective)</span>
+                            <span ng-if="entry.effectiveness === 'immune'">(no effect!)</span>
+                            <span ng-if="entry.ailmentInflicted"> The opponent was {{c.ailmentLabel(entry.ailmentInflicted).toLowerCase()}}!</span>
+                            <span ng-if="entry.fainted"> - fainted!</span>
+                        </span>
+                        <span ng-if="!entry.switchMessage && !entry.itemUsed && !entry.statusBlocked && !entry.confusionSelfHit && !entry.statusDamage && !entry.hit">
+                            Round {{entry.round}}: {{entry.attackerName}} used {{entry.move}} - missed!
+                        </span>
+                    </div>
+                </div>
+
+                <div class="pokemon-battle-winner-banner" ng-if="c.teamWinner && c.teamWinner !== 'Tie'">
+                    Team {{c.teamWinner}} wins!
+                </div>
+                <div class="pokemon-battle-winner-banner" ng-if="c.teamWinner === 'Tie'">
+                    It's a tie!
+                </div>
+
+                <div class="pokemon-battle-actions" ng-if="c.teamWinner">
+                    <button type="button" class="btn btn-default" ng-click="c.newTeamBattle()">Battle Again</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sp-empty-state" ng-if="!c.data.pokemonList.length">
+            <p class="sp-empty-body">No Pokemon found. Run the "Import All Pokemon" scheduled job first.</p>
+        </div>
+    </div>
+</div>

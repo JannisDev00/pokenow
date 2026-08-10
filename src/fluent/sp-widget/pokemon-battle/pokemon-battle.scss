@@ -1,0 +1,237 @@
+.pokemon-battle-widget {
+    .pokemon-battle-actions {
+        margin: 15px 0;
+        text-align: center;
+    }
+
+    .pokemon-battle-mode-select {
+        margin: 15px 0;
+        text-align: center;
+
+        .pokemon-battle-mode-btn {
+            margin: 0 6px;
+            min-width: 160px;
+        }
+    }
+
+    .pokemon-battle-back {
+        margin-bottom: 10px;
+    }
+
+    .pokemon-battle-back-btn {
+        padding-left: 0;
+    }
+
+    .pokemon-battle-team-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 6px;
+        text-transform: capitalize;
+        font-weight: bold;
+    }
+
+    .pokemon-battle-team-select {
+        margin-bottom: 6px;
+    }
+
+    .pokemon-battle-team-panel {
+        margin-bottom: 15px;
+    }
+
+    .pokemon-battle-roster {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        margin-bottom: 10px;
+
+        .pokemon-battle-roster-slot {
+            flex: 1;
+            text-align: center;
+            border: 1px solid $panel-default-border;
+            border-radius: $border-radius-base;
+            padding: 4px;
+            opacity: 0.5;
+
+            img {
+                max-width: 100%;
+                max-height: 40px;
+            }
+        }
+
+        .pokemon-battle-roster-active {
+            opacity: 1;
+            border-color: $brand-primary;
+            border-width: 2px;
+        }
+
+        .pokemon-battle-roster-fainted {
+            opacity: 0.25;
+        }
+
+        .pokemon-battle-roster-name {
+            font-size: $font-size-small;
+            text-transform: capitalize;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .pokemon-battle-item {
+        margin-top: 10px;
+
+        .pokemon-battle-item-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            text-transform: capitalize;
+
+            .pokemon-battle-move-meta {
+                display: block;
+                font-size: $font-size-small;
+                text-transform: none;
+                color: $gray-light;
+            }
+        }
+
+        .pokemon-battle-item-note {
+            margin-top: 4px;
+            font-size: $font-size-small;
+            color: $gray-light;
+            font-style: italic;
+        }
+
+        .sp-badge {
+            text-transform: capitalize;
+        }
+    }
+
+    .pokemon-battle-move-picked {
+        margin-top: 10px;
+        font-size: $font-size-small;
+        color: $gray-light;
+        font-style: italic;
+    }
+
+    .pokemon-battle-vs {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: $font-size-large;
+        padding-top: 25px;
+    }
+
+    .pokemon-battle-result {
+        margin-top: 20px;
+    }
+
+    .pokemon-battle-card {
+        text-align: center;
+        border: 1px solid $panel-default-border;
+        border-radius: $border-radius-base;
+        padding: 15px;
+    }
+
+    .pokemon-battle-winner {
+        border-color: $brand-success;
+        border-width: 2px;
+    }
+
+    .pokemon-battle-sprite {
+        max-height: 120px;
+        margin: 0 auto 10px;
+    }
+
+    .pokemon-battle-record {
+        color: $gray-light;
+        font-size: $font-size-small;
+        margin-bottom: 6px;
+    }
+
+    .pokemon-battle-types {
+        margin-bottom: 10px;
+
+        .sp-badge {
+            margin-right: 4px;
+            text-transform: capitalize;
+        }
+    }
+
+    .pokemon-battle-hp {
+        margin-bottom: 10px;
+    }
+
+    .pokemon-battle-status {
+        margin-bottom: 10px;
+
+        .sp-badge {
+            margin: 0 2px;
+        }
+    }
+
+    .pokemon-battle-move-buttons {
+        margin-top: 10px;
+
+        .pokemon-battle-move-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            text-transform: capitalize;
+            margin-bottom: 6px;
+
+            .pokemon-battle-move-meta {
+                display: block;
+                font-size: $font-size-small;
+                text-transform: none;
+                color: $gray-light;
+            }
+        }
+    }
+
+    .pokemon-battle-move-list {
+        margin-top: 10px;
+
+        .sp-badge {
+            margin: 2px;
+            text-transform: capitalize;
+        }
+    }
+
+    .pokemon-battle-history {
+        margin-top: 10px;
+        text-align: left;
+        font-size: $font-size-small;
+        color: $gray-light;
+
+        .pokemon-battle-history-title {
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+    }
+
+    .pokemon-battle-log {
+        margin-top: 20px;
+        max-height: 220px;
+        overflow-y: auto;
+        border: 1px solid $panel-default-border;
+        border-radius: $border-radius-base;
+        padding: 10px;
+    }
+
+    .pokemon-battle-log-entry {
+        padding: 4px 0;
+        border-bottom: 1px solid $panel-default-border;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .pokemon-battle-winner-banner {
+        margin-top: 15px;
+        text-align: center;
+        font-size: $font-size-large;
+        font-weight: bold;
+    }
+}

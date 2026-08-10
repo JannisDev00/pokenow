@@ -1,0 +1,6 @@
+{
+    "scope": "x_1850095_pokenow",
+    "scopeId": "d10f153589a740bb92a6948fb2b54db2",
+    "name": "PokeNow",
+    "tsconfigPath": "./src/server/tsconfig.json"
+}
