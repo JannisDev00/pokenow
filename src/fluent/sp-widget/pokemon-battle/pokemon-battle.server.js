@@ -322,20 +322,24 @@
     }
 
     // Picks a random opponent for the next Tournament round, filtered by
-    // stat_total relative to the player's own (easy: at or below; moderate:
-    // at least 75%; hard: at or above - no upper bound on moderate/hard, per
-    // spec). Avoids repeat opponents within the run where possible, but
-    // falls back to allowing repeats rather than dead-ending a long survival
-    // run once the eligible pool is exhausted.
+    // stat_total relative to the player's own, as non-overlapping bands:
+    // easy 0-74%, moderate 75-99%, hard 100%+ (only hard is uncapped - an
+    // earlier open-ended-minimum version let "moderate" occasionally serve
+    // up an opponent stronger than "hard"'s own floor, which undercut the
+    // sense of difficulty actually escalating). Avoids repeat opponents
+    // within the run where possible, but falls back to allowing repeats
+    // rather than dead-ending a long survival run once the pool is
+    // exhausted.
     function pickTournamentOpponent(playerSysId, playerStatTotal, difficulty, excludeSysIds) {
         function queryCandidates(allowRepeats) {
             var qgr = new GlideRecord(ATTR_TABLE)
             qgr.addQuery('sys_id', '!=', playerSysId)
             qgr.addQuery('stat_total', '>', 0)
             if (difficulty === 'easy') {
-                qgr.addQuery('stat_total', '<=', playerStatTotal)
+                qgr.addQuery('stat_total', '<', Math.ceil(playerStatTotal * 0.75))
             } else if (difficulty === 'moderate') {
                 qgr.addQuery('stat_total', '>=', Math.ceil(playerStatTotal * 0.75))
+                qgr.addQuery('stat_total', '<', playerStatTotal)
             } else {
                 qgr.addQuery('stat_total', '>=', playerStatTotal)
             }
