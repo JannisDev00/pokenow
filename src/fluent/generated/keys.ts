@@ -112,18 +112,70 @@ declare global {
                     'pokemon-leaderboard-dashboard-tab': {
                         table: 'par_dashboard_tab'
                         id: '174e8449cfe140abb47bd5fb16ec3abf'
+                        deleted: true
+                    }
+                    'pokemon-leaderboard-dashboard-tab-generation': {
+                        table: 'par_dashboard_tab'
+                        id: '3f976f72c5d94bb4863a5166c7295ddc'
+                    }
+                    'pokemon-leaderboard-dashboard-tab-pokemon': {
+                        table: 'par_dashboard_tab'
+                        id: '8ca406dea97a4d4181abb512116a8280'
+                    }
+                    'pokemon-leaderboard-dashboard-tab-type': {
+                        table: 'par_dashboard_tab'
+                        id: '36e820987c67455ab672c0d1358d9f7a'
                     }
                     'pokemon-leaderboard-dashboard-widget-all': {
                         table: 'par_dashboard_widget'
                         id: '90f2a8b4401a4ed2916c12a46d454ee2'
+                        deleted: true
+                    }
+                    'pokemon-leaderboard-dashboard-widget-generation-all': {
+                        table: 'par_dashboard_widget'
+                        id: '86323a90718f46e28796875d84e9edb8'
+                    }
+                    'pokemon-leaderboard-dashboard-widget-generation-month': {
+                        table: 'par_dashboard_widget'
+                        id: 'df1d853c94e9429c8654bff0def09333'
+                    }
+                    'pokemon-leaderboard-dashboard-widget-generation-week': {
+                        table: 'par_dashboard_widget'
+                        id: 'a6a35b31e41d4993bd8a1ea6aa2cc6a5'
                     }
                     'pokemon-leaderboard-dashboard-widget-month': {
                         table: 'par_dashboard_widget'
                         id: 'a70b7c7771bf44dca0febd2d4536a885'
+                        deleted: true
+                    }
+                    'pokemon-leaderboard-dashboard-widget-pokemon-all': {
+                        table: 'par_dashboard_widget'
+                        id: '023d0dd5fd304ad6bc12ec4df7ce7e6e'
+                    }
+                    'pokemon-leaderboard-dashboard-widget-pokemon-month': {
+                        table: 'par_dashboard_widget'
+                        id: '1739ce73b6c9403a8b46027fd2d284f2'
+                    }
+                    'pokemon-leaderboard-dashboard-widget-pokemon-week': {
+                        table: 'par_dashboard_widget'
+                        id: 'a83715b7f04d4fc2980b5e8cdde2c5cd'
+                    }
+                    'pokemon-leaderboard-dashboard-widget-type-all': {
+                        table: 'par_dashboard_widget'
+                        id: 'dc740b6eaee94ef58785c10d5d775be4'
+                    }
+                    'pokemon-leaderboard-dashboard-widget-type-month': {
+                        table: 'par_dashboard_widget'
+                        id: '13d0ed339b744c92bb291ea153031f28'
+                    }
+                    'pokemon-leaderboard-dashboard-widget-type-week': {
+                        table: 'par_dashboard_widget'
+                        id: 'bee232e75c844bb495b7e74cb8905f3b'
                     }
                     'pokemon-leaderboard-dashboard-widget-week': {
                         table: 'par_dashboard_widget'
                         id: 'ef66a8693a3049d4a0768de86c12fd4f'
+                        deleted: true
                     }
                     'pokemon-leaderboard-widget': {
                         table: 'sp_widget'
@@ -379,6 +431,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '06f4d46c61164214b5ce50c58141e536'
+                        key: {
+                            name: 'x_2270446_pokenow_battle_log'
+                            element: 'generation'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '098d6ce5b2f34101bc36a2ba79668952'
                         deleted: true
@@ -592,6 +653,14 @@ declare global {
                             }
                             element: 'height'
                             position: '4'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '15d89e96f743434987753ada8d8fd55b'
+                        key: {
+                            name: 'x_2270446_pokenow_battle_log'
+                            element: 'primary_type'
                         }
                     },
                     {
@@ -850,6 +919,7 @@ declare global {
                     {
                         table: 'par_dashboard_canvas'
                         id: '31ff2fdbee4847f8aa19d9a415e43d22'
+                        deleted: true
                         key: {
                             dashboard: 'cb67efa6fe554d9985346277ab546bde'
                             dashboard_tab: '174e8449cfe140abb47bd5fb16ec3abf'
@@ -1304,6 +1374,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'par_dashboard_canvas'
+                        id: '6b1f093b5f114dc889ca26430e29a72d'
+                        key: {
+                            dashboard: 'cb67efa6fe554d9985346277ab546bde'
+                            dashboard_tab: '3f976f72c5d94bb4863a5166c7295ddc'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '6c13ee87ed0640b8a16501f5a2d48bc8'
                         key: {
@@ -1591,6 +1669,14 @@ declare global {
                             name: 'x_2270446_pokenow_move'
                             element: 'NULL'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '813746c986a545e5bcf15d0ea07453de'
+                        key: {
+                            name: 'x_2270446_pokenow_battle_log'
+                            element: 'generation'
                         }
                     },
                     {
@@ -2474,6 +2560,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: 'd80e20c64d914e1f8374e0b0d748badd'
+                        key: {
+                            name: 'x_2270446_pokenow_battle_log'
+                            element: 'primary_type'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: 'd8365cf424d949f6997c784a263707e6'
                         key: {
                             name: 'x_2270446_pokenow_attributes'
@@ -2710,6 +2805,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'par_dashboard_canvas'
+                        id: 'f269e4ec961f43dd80c83faae1d18670'
+                        key: {
+                            dashboard: 'cb67efa6fe554d9985346277ab546bde'
+                            dashboard_tab: '8ca406dea97a4d4181abb512116a8280'
+                        }
+                    },
+                    {
                         table: 'sys_db_object'
                         id: 'f328702431184b4eb66c2a9c7c80300d'
                         key: {
@@ -2761,6 +2864,14 @@ declare global {
                             value: 'tie'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'par_dashboard_canvas'
+                        id: 'f6ff883b8ecc467b91db39dd07e5d1b5'
+                        key: {
+                            dashboard: 'cb67efa6fe554d9985346277ab546bde'
+                            dashboard_tab: '36e820987c67455ab672c0d1358d9f7a'
                         }
                     },
                     {

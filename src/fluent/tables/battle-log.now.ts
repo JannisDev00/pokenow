@@ -1,4 +1,4 @@
-import { Table, ReferenceColumn, StringColumn, ChoiceColumn } from '@servicenow/sdk/core'
+import { Table, ReferenceColumn, StringColumn, ChoiceColumn, IntegerColumn } from '@servicenow/sdk/core'
 
 // One row per Pokemon per battle outcome, written by updatePokemonRecord()
 // in pokemon-battle.server.js alongside the existing wins/losses counters
@@ -26,5 +26,10 @@ export const x_2270446_pokenow_battle_log = Table({
                 tie: 'Tie',
             },
         }),
+        // Snapshotted from the Pokemon record at write time (not dot-walked
+        // at query time) so the dashboard's By Type / By Generation widgets
+        // can group directly off this table, same as the By Pokemon ones.
+        primary_type: ReferenceColumn({ label: 'Primary Type', referenceTable: 'x_2270446_pokenow_type' }),
+        generation: IntegerColumn({ label: 'Generation' }),
     },
 })

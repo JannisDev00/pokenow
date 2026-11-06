@@ -293,6 +293,8 @@
         logGr.setValue('pokemon', sysId)
         logGr.setValue('opponent_name', opponentName)
         logGr.setValue('result', result)
+        logGr.setValue('primary_type', gr.getValue('primary_type'))
+        logGr.setValue('generation', gr.getValue('generation'))
         logGr.insert()
 
         return { wins: wins, losses: losses, recentBattles: history }

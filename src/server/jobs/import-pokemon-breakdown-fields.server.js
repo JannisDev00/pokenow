@@ -1,6 +1,7 @@
 ;(function () {
     var ATTR_TABLE = 'x_2270446_pokenow_attributes'
     var POKE_TYPE_TABLE = 'x_2270446_pokenow_poke_type'
+    var BATTLE_LOG_TABLE = 'x_2270446_pokenow_battle_log'
 
     // Fixed national dex ID ranges per generation - avoids an extra PokeAPI
     // call per species just to read its own "generation" field.
@@ -81,4 +82,33 @@
     }
 
     gs.info('PokeNow breakdown fields backfill complete. Processed: ' + processed + ', Skipped: ' + skipped)
+
+    gs.info('PokeNow breakdown fields backfill: finding battle log rows without a generation...')
+
+    var logGr = new GlideRecord(BATTLE_LOG_TABLE)
+    logGr.addQuery('generation', '')
+    logGr.setLimit(2000)
+    logGr.query()
+
+    var logProcessed = 0
+    var logSkipped = 0
+
+    while (logGr.next()) {
+        try {
+            var pgr = new GlideRecord(ATTR_TABLE)
+            if (!pgr.get(logGr.getValue('pokemon'))) {
+                logSkipped++
+                continue
+            }
+            logGr.setValue('primary_type', pgr.getValue('primary_type'))
+            logGr.setValue('generation', pgr.getValue('generation'))
+            logGr.update()
+            logProcessed++
+        } catch (e) {
+            logSkipped++
+            gs.error('PokeNow breakdown fields backfill: failed processing battle log row ' + logGr.getUniqueValue() + ': ' + e.message)
+        }
+    }
+
+    gs.info('PokeNow breakdown fields backfill complete (battle log). Processed: ' + logProcessed + ', Skipped: ' + logSkipped)
 })()
