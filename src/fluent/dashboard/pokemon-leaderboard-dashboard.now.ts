@@ -31,6 +31,7 @@ import { pokemonWorkspace } from '../workspaces/pokemon/workspace.now'
 // no helper functions, string concatenation, or ternaries allowed.
 const BATTLE_LOG_TABLE = 'x_2270446_pokenow_battle_log'
 const VERTICAL_BAR = '23051643b7e03010097cb81cde11a910'
+const LIST_SIMPLE = '2b1c080881e05dc63b917044290b233f'
 
 export const pokemonLeaderboardDashboard = Dashboard({
     $id: Now.ID['pokemon-leaderboard-dashboard'],
@@ -1174,6 +1175,58 @@ export const pokemonLeaderboardDashboard = Dashboard({
                     width: 48,
                     height: 14,
                     position: { x: 0, y: 28 },
+                },
+            ],
+        },
+        {
+            $id: Now.ID['pokemon-leaderboard-dashboard-tab-recent'],
+            name: 'Recent Battles',
+            widgets: [
+                {
+                    $id: Now.ID['pokemon-leaderboard-dashboard-widget-recent'],
+                    // 'List - Simple' macroponent - every battle ever logged
+                    // is kept in battle_log (nothing is pruned), this just
+                    // paginates through it 20 at a time, newest first.
+                    component: LIST_SIMPLE,
+                    componentProps: {
+                        table: BATTLE_LOG_TABLE,
+                        columns: 'pokemon,opponent_name,result,sys_created_on',
+                        query: 'ORDERBYDESCsys_created_on',
+                        fixedQuery: '',
+                        groupByField: '',
+                        limit: 20,
+                        listTitle: 'Recent Battles',
+                        maxColumns: 9,
+                        maxCharLimit: 4000,
+                        wordWrap: false,
+                        overrideWordWrapUserPref: false,
+                        hideHeader: false,
+                        hideTitle: false,
+                        hideTitleRowCount: false,
+                        hideLastRefreshedText: false,
+                        hideRefreshButton: false,
+                        hideViewAll: false,
+                        hideLinks: false,
+                        hideDotwalk: false,
+                        hideColumnFiltering: false,
+                        hideColumnGrouping: false,
+                        hideColumnReorder: false,
+                        hideColumnResizing: false,
+                        hideColumnSorting: false,
+                        hideInlineEditing: false,
+                        hideRowSelector: false,
+                        hidePersonalization: false,
+                        hideEmptyStateImage: false,
+                        hideHighlightContent: false,
+                        hideHighlightedValues: false,
+                        highlightContent: { color: '', patterns: [] },
+                        highlightedValueConfigId: '',
+                        refreshRequested: '',
+                        noDebounce: '',
+                    },
+                    width: 48,
+                    height: 20,
+                    position: { x: 0, y: 0 },
                 },
             ],
         },

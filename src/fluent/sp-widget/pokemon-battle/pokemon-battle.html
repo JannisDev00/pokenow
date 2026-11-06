@@ -22,24 +22,47 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-5">
                     <label for="pokemon-battle-a">Your Pokemon</label>
-                    <select id="pokemon-battle-a" class="form-control" ng-model="c.pokemonA" ng-disabled="c.started">
-                        <option value="">-- choose --</option>
-                        <option ng-repeat="p in c.data.pokemonList track by p.sys_id" value="{{p.sys_id}}">{{p.name}}</option>
-                    </select>
+                    <div class="pokemon-battle-combobox">
+                        <input type="text"
+                               id="pokemon-battle-a"
+                               class="form-control"
+                               ng-model="c.search.a"
+                               ng-change="c.onSearch('a')"
+                               ng-focus="c.focusSearch('a')"
+                               ng-blur="c.blurSearch('a')"
+                               ng-disabled="c.started"
+                               placeholder="Search Pokemon..."
+                               autocomplete="off">
+                        <div class="pokemon-battle-combobox-results" ng-if="c.searchResults.a.length && c.searchFocus.a">
+                            <div class="pokemon-battle-combobox-result" ng-repeat="p in c.searchResults.a track by p.sys_id" ng-mousedown="c.pickPokemon('a', p)">{{p.name}}</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-xs-12 col-sm-2 pokemon-battle-vs">
                     <strong>VS</strong>
                 </div>
                 <div class="col-xs-12 col-sm-5">
                     <label for="pokemon-battle-b">Opponent</label>
-                    <select id="pokemon-battle-b" class="form-control" ng-model="c.pokemonB" ng-disabled="c.started">
-                        <option value="">-- choose --</option>
-                        <option ng-repeat="p in c.data.pokemonList track by p.sys_id" value="{{p.sys_id}}">{{p.name}}</option>
-                    </select>
+                    <div class="pokemon-battle-combobox">
+                        <input type="text"
+                               id="pokemon-battle-b"
+                               class="form-control"
+                               ng-model="c.search.b"
+                               ng-change="c.onSearch('b')"
+                               ng-focus="c.focusSearch('b')"
+                               ng-blur="c.blurSearch('b')"
+                               ng-disabled="c.started"
+                               placeholder="Search Pokemon..."
+                               autocomplete="off">
+                        <div class="pokemon-battle-combobox-results" ng-if="c.searchResults.b.length && c.searchFocus.b">
+                            <div class="pokemon-battle-combobox-result" ng-repeat="p in c.searchResults.b track by p.sys_id" ng-mousedown="c.pickPokemon('b', p)">{{p.name}}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="pokemon-battle-actions" ng-if="!c.started">
+                <button type="button" class="btn btn-default" ng-click="c.randomize1v1()">Randomize</button>
                 <button type="button" class="btn btn-primary" ng-click="c.startBattle()" ng-disabled="!c.canStart()">
                     <span ng-if="!c.loading">Start Battle!</span>
                     <span ng-if="c.loading">Fetching moves...</span>
@@ -185,20 +208,38 @@
                             <span>Team A</span>
                             <button type="button" class="btn btn-xs btn-default" ng-click="c.randomizeTeam('A')">Randomize</button>
                         </div>
-                        <select class="form-control pokemon-battle-team-select" ng-repeat="n in [0,1,2,3] track by n" ng-model="c.teamA[n]">
-                            <option value="">-- choose --</option>
-                            <option ng-repeat="p in c.data.pokemonList track by p.sys_id" value="{{p.sys_id}}">{{p.name}}</option>
-                        </select>
+                        <div class="pokemon-battle-combobox pokemon-battle-team-select" ng-repeat="n in [0,1,2,3] track by n">
+                            <input type="text"
+                                   class="form-control"
+                                   ng-model="c.teamSearch.a[n]"
+                                   ng-change="c.onTeamSearch('a', n)"
+                                   ng-focus="c.focusTeamSearch('a', n)"
+                                   ng-blur="c.blurTeamSearch('a', n)"
+                                   placeholder="Search Pokemon..."
+                                   autocomplete="off">
+                            <div class="pokemon-battle-combobox-results" ng-if="c.teamSearchResults.a[n].length && c.teamSearchFocus.a[n]">
+                                <div class="pokemon-battle-combobox-result" ng-repeat="p in c.teamSearchResults.a[n] track by p.sys_id" ng-mousedown="c.pickTeamPokemon('a', n, p)">{{p.name}}</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="pokemon-battle-team-header">
                             <span>Team B <span ng-if="c.teamControlMode === 'ai'">(AI)</span></span>
                             <button type="button" class="btn btn-xs btn-default" ng-click="c.randomizeTeam('B')">Randomize</button>
                         </div>
-                        <select class="form-control pokemon-battle-team-select" ng-repeat="n in [0,1,2,3] track by n" ng-model="c.teamB[n]">
-                            <option value="">-- choose --</option>
-                            <option ng-repeat="p in c.data.pokemonList track by p.sys_id" value="{{p.sys_id}}">{{p.name}}</option>
-                        </select>
+                        <div class="pokemon-battle-combobox pokemon-battle-team-select" ng-repeat="n in [0,1,2,3] track by n">
+                            <input type="text"
+                                   class="form-control"
+                                   ng-model="c.teamSearch.b[n]"
+                                   ng-change="c.onTeamSearch('b', n)"
+                                   ng-focus="c.focusTeamSearch('b', n)"
+                                   ng-blur="c.blurTeamSearch('b', n)"
+                                   placeholder="Search Pokemon..."
+                                   autocomplete="off">
+                            <div class="pokemon-battle-combobox-results" ng-if="c.teamSearchResults.b[n].length && c.teamSearchFocus.b[n]">
+                                <div class="pokemon-battle-combobox-result" ng-repeat="p in c.teamSearchResults.b[n] track by p.sys_id" ng-mousedown="c.pickTeamPokemon('b', n, p)">{{p.name}}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

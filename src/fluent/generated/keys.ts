@@ -122,6 +122,10 @@ declare global {
                         table: 'par_dashboard_tab'
                         id: '8ca406dea97a4d4181abb512116a8280'
                     }
+                    'pokemon-leaderboard-dashboard-tab-recent': {
+                        table: 'par_dashboard_tab'
+                        id: 'bfec8e6cc071403c9cc397f68944bc8a'
+                    }
                     'pokemon-leaderboard-dashboard-tab-type': {
                         table: 'par_dashboard_tab'
                         id: '36e820987c67455ab672c0d1358d9f7a'
@@ -159,6 +163,10 @@ declare global {
                     'pokemon-leaderboard-dashboard-widget-pokemon-week': {
                         table: 'par_dashboard_widget'
                         id: 'a83715b7f04d4fc2980b5e8cdde2c5cd'
+                    }
+                    'pokemon-leaderboard-dashboard-widget-recent': {
+                        table: 'par_dashboard_widget'
+                        id: '85b4c5290527483d812fa93a8dccd999'
                     }
                     'pokemon-leaderboard-dashboard-widget-type-all': {
                         table: 'par_dashboard_widget'
@@ -1036,6 +1044,14 @@ declare global {
                             name: 'x_2270446_pokenow_attributes'
                             element: 'sprites'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'par_dashboard_canvas'
+                        id: '3dfbba5373f746ae95167567a3daa601'
+                        key: {
+                            dashboard: 'cb67efa6fe554d9985346277ab546bde'
+                            dashboard_tab: 'bfec8e6cc071403c9cc397f68944bc8a'
                         }
                     },
                     {

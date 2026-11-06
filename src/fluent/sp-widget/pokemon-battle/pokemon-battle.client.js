@@ -5,9 +5,40 @@ api.controller = function ($timeout) {
     c.mode = '' // '1v1' | '4v4'
     c.teamControlMode = '' // 'ai' | 'manual' (4v4 only)
 
+    // ---- Pokemon search (1v1 pickers + 4v4 team slots) ----
+    var MAX_SEARCH_RESULTS = 20
+
+    function filterPokemonList(query) {
+        if (!query) {
+            return []
+        }
+        var q = query.toLowerCase()
+        var matches = []
+        for (var i = 0; i < c.data.pokemonList.length && matches.length < MAX_SEARCH_RESULTS; i++) {
+            if (c.data.pokemonList[i].name.toLowerCase().indexOf(q) !== -1) {
+                matches.push(c.data.pokemonList[i])
+            }
+        }
+        return matches
+    }
+
+    function shuffledCopy(list) {
+        var pool = list.slice()
+        for (var i = pool.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1))
+            var tmp = pool[i]
+            pool[i] = pool[j]
+            pool[j] = tmp
+        }
+        return pool
+    }
+
     // ---- 1v1 state ----
     c.pokemonA = ''
     c.pokemonB = ''
+    c.search = { a: '', b: '' }
+    c.searchResults = { a: [], b: [] }
+    c.searchFocus = { a: false, b: false }
     c.result = null
     c.hpA = 0
     c.hpB = 0
@@ -33,6 +64,9 @@ api.controller = function ($timeout) {
     // ---- 4v4 state ----
     c.teamA = ['', '', '', '']
     c.teamB = ['', '', '', '']
+    c.teamSearch = { a: ['', '', '', ''], b: ['', '', '', ''] }
+    c.teamSearchResults = { a: [[], [], [], []], b: [[], [], [], []] }
+    c.teamSearchFocus = { a: [false, false, false, false], b: [false, false, false, false] }
     c.teamResult = null
     c.activeA = 0
     c.activeB = 0
@@ -291,25 +325,94 @@ api.controller = function ($timeout) {
         c.confusionB = { turnsRemaining: 0 }
     }
 
+    // Search-as-you-type picker for the 1v1 selects, since scrolling a
+    // 1300+ option <select> isn't practical. Typing clears any existing
+    // pick until a result is clicked; results close on blur (delayed so
+    // the click on a result registers first).
+    c.onSearch = function (side) {
+        if (side === 'a') {
+            c.pokemonA = ''
+        } else {
+            c.pokemonB = ''
+        }
+        c.searchResults[side] = filterPokemonList(c.search[side])
+    }
+
+    c.focusSearch = function (side) {
+        c.searchFocus[side] = true
+    }
+
+    c.blurSearch = function (side) {
+        $timeout(function () {
+            c.searchFocus[side] = false
+        }, 200)
+    }
+
+    c.pickPokemon = function (side, p) {
+        if (side === 'a') {
+            c.pokemonA = p.sys_id
+        } else {
+            c.pokemonB = p.sys_id
+        }
+        c.search[side] = p.name
+        c.searchResults[side] = []
+        c.searchFocus[side] = false
+    }
+
+    c.randomize1v1 = function () {
+        if (c.started) {
+            return
+        }
+        var pool = shuffledCopy(c.data.pokemonList)
+        if (pool.length < 2) {
+            return
+        }
+        c.pickPokemon('a', pool[0])
+        c.pickPokemon('b', pool[1])
+    }
+
     // ==================== 4v4 ====================
 
     c.randomizeTeam = function (side) {
-        var pool = c.data.pokemonList.slice()
-        for (var i = pool.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1))
-            var tmp = pool[i]
-            pool[i] = pool[j]
-            pool[j] = tmp
-        }
+        var pool = shuffledCopy(c.data.pokemonList)
         var picks = []
+        var names = []
         for (var k = 0; k < 4 && k < pool.length; k++) {
             picks.push(pool[k].sys_id)
+            names.push(pool[k].name)
         }
+        var key = side === 'A' ? 'a' : 'b'
         if (side === 'A') {
             c.teamA = picks
         } else {
             c.teamB = picks
         }
+        c.teamSearch[key] = names
+        c.teamSearchResults[key] = [[], [], [], []]
+    }
+
+    // Search-as-you-type picker for the 4v4 team slots, same reasoning as
+    // c.onSearch/c.pickPokemon above.
+    c.onTeamSearch = function (side, idx) {
+        ;(side === 'a' ? c.teamA : c.teamB)[idx] = ''
+        c.teamSearchResults[side][idx] = filterPokemonList(c.teamSearch[side][idx])
+    }
+
+    c.focusTeamSearch = function (side, idx) {
+        c.teamSearchFocus[side][idx] = true
+    }
+
+    c.blurTeamSearch = function (side, idx) {
+        $timeout(function () {
+            c.teamSearchFocus[side][idx] = false
+        }, 200)
+    }
+
+    c.pickTeamPokemon = function (side, idx, p) {
+        ;(side === 'a' ? c.teamA : c.teamB)[idx] = p.sys_id
+        c.teamSearch[side][idx] = p.name
+        c.teamSearchResults[side][idx] = []
+        c.teamSearchFocus[side][idx] = false
     }
 
     function hasFourDistinct(team) {

@@ -2,6 +2,44 @@
     .pokemon-battle-actions {
         margin: 15px 0;
         text-align: center;
+
+        .btn + .btn {
+            margin-left: 8px;
+        }
+    }
+
+    .pokemon-battle-combobox {
+        position: relative;
+
+        + .pokemon-battle-combobox {
+            margin-top: 6px;
+        }
+    }
+
+    .pokemon-battle-combobox-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        max-height: 220px;
+        overflow-y: auto;
+        background: #fff;
+        border: 1px solid $panel-default-border;
+        border-top: none;
+        border-radius: 0 0 $border-radius-base $border-radius-base;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .pokemon-battle-combobox-result {
+        padding: 6px 12px;
+        cursor: pointer;
+        text-transform: capitalize;
+
+        &:hover {
+            background: $brand-primary;
+            color: #fff;
+        }
     }
 
     .pokemon-battle-mode-select {
