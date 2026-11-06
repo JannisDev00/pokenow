@@ -389,4 +389,63 @@
         font-size: $font-size-large;
         font-weight: bold;
     }
+
+    .pokemon-battle-tournament-randomize {
+        margin-top: 8px;
+    }
+
+    .pokemon-battle-tournament-section {
+        margin-top: 20px;
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+    }
+
+    .pokemon-battle-tournament-options {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+
+        .pokemon-battle-tournament-option-btn {
+            flex: 1 1 160px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 12px;
+        }
+
+        .pokemon-battle-tournament-option-meta {
+            margin-top: 4px;
+            font-size: $font-size-small;
+            font-weight: normal;
+            opacity: 0.8;
+            text-align: center;
+        }
+    }
+
+    .pokemon-battle-tournament-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        font-weight: bold;
+
+        .pokemon-battle-tournament-streak {
+            color: $brand-primary;
+        }
+    }
+
+    .pokemon-battle-tournament-advancing {
+        text-align: center;
+        padding: 30px 0;
+        font-size: $font-size-large;
+        font-weight: bold;
+        color: $brand-primary;
+    }
+
+    .pokemon-battle-tournament-end {
+        margin-top: 10px;
+    }
 }

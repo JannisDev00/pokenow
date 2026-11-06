@@ -25,6 +25,11 @@
                     <span class="pokemon-battle-mode-card-title">4 vs 4</span>
                     <span class="pokemon-battle-mode-card-subtitle">Full team battle</span>
                 </button>
+                <button type="button" class="pokemon-battle-mode-card" ng-click="c.selectMode('tournament')">
+                    <img class="pokemon-battle-mode-card-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png" alt="">
+                    <span class="pokemon-battle-mode-card-title">Tournament</span>
+                    <span class="pokemon-battle-mode-card-subtitle">Survive a gauntlet of random opponents</span>
+                </button>
             </div>
         </div>
 
@@ -426,6 +431,202 @@
 
                 <div class="pokemon-battle-actions" ng-if="c.teamWinner">
                     <button type="button" class="btn btn-default" ng-click="c.newTeamBattle()">Battle Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== Tournament ==================== -->
+        <div ng-if="c.mode === 'tournament'">
+            <div class="pokemon-battle-back" ng-if="!c.tournamentStarted">
+                <button type="button" class="btn btn-link pokemon-battle-back-btn" ng-click="c.backToModeSelect()">&larr; Change mode</button>
+            </div>
+
+            <div ng-if="!c.tournamentStarted">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <label for="pokemon-battle-tournament-pokemon">Your Pokemon</label>
+                        <div class="pokemon-battle-combobox">
+                            <input type="text"
+                                   id="pokemon-battle-tournament-pokemon"
+                                   class="form-control"
+                                   ng-model="c.tournamentSearch"
+                                   ng-change="c.onTournamentSearch()"
+                                   ng-focus="c.focusTournamentSearch()"
+                                   ng-blur="c.blurTournamentSearch()"
+                                   placeholder="Search Pokemon..."
+                                   autocomplete="off">
+                            <div class="pokemon-battle-combobox-results" ng-if="c.tournamentSearchResults.length && c.tournamentSearchFocus">
+                                <div class="pokemon-battle-combobox-result" ng-repeat="p in c.tournamentSearchResults track by p.sys_id" ng-mousedown="c.pickTournamentPokemon(p)">{{p.name}}</div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-default pokemon-battle-tournament-randomize" ng-click="c.randomizeTournamentPokemon()">Randomize</button>
+                    </div>
+                </div>
+
+                <div class="pokemon-battle-tournament-section">
+                    <label>Difficulty</label>
+                    <div class="pokemon-battle-tournament-options">
+                        <button type="button"
+                                class="btn btn-default pokemon-battle-tournament-option-btn"
+                                ng-class="{'btn-primary': c.tournamentDifficulty === 'easy'}"
+                                ng-click="c.selectTournamentDifficulty('easy')">
+                            Easy
+                            <span class="pokemon-battle-tournament-option-meta">Opponents at or below your power</span>
+                        </button>
+                        <button type="button"
+                                class="btn btn-default pokemon-battle-tournament-option-btn"
+                                ng-class="{'btn-primary': c.tournamentDifficulty === 'moderate'}"
+                                ng-click="c.selectTournamentDifficulty('moderate')">
+                            Moderate
+                            <span class="pokemon-battle-tournament-option-meta">Opponents at least 75% of your power</span>
+                        </button>
+                        <button type="button"
+                                class="btn btn-default pokemon-battle-tournament-option-btn"
+                                ng-class="{'btn-primary': c.tournamentDifficulty === 'hard'}"
+                                ng-click="c.selectTournamentDifficulty('hard')">
+                            Hard
+                            <span class="pokemon-battle-tournament-option-meta">Opponents at your power or stronger</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pokemon-battle-tournament-section">
+                    <label>Length</label>
+                    <div class="pokemon-battle-tournament-options">
+                        <button type="button"
+                                class="btn btn-default pokemon-battle-tournament-option-btn"
+                                ng-class="{'btn-primary': c.tournamentLengthMode === 'fixed'}"
+                                ng-click="c.selectTournamentLengthMode('fixed')">
+                            Fixed Gauntlet
+                            <span class="pokemon-battle-tournament-option-meta">Win {{c.tournamentTotalRounds}} in a row to become champion</span>
+                        </button>
+                        <button type="button"
+                                class="btn btn-default pokemon-battle-tournament-option-btn"
+                                ng-class="{'btn-primary': c.tournamentLengthMode === 'endless'}"
+                                ng-click="c.selectTournamentLengthMode('endless')">
+                            Endless Survival
+                            <span class="pokemon-battle-tournament-option-meta">No finish line - just chase your longest streak</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pokemon-battle-actions">
+                    <button type="button" class="btn btn-primary" ng-click="c.startTournament()" ng-disabled="!c.canStartTournament()">
+                        <span ng-if="!c.loading">Start Tournament!</span>
+                        <span ng-if="c.loading">Fetching moves...</span>
+                    </button>
+                </div>
+            </div>
+
+            <div ng-if="c.tournamentStarted">
+                <div class="pokemon-battle-tournament-header">
+                    <span ng-if="c.tournamentLengthMode === 'fixed'">Round {{c.tournamentRound}} of {{c.tournamentTotalRounds}}</span>
+                    <span ng-if="c.tournamentLengthMode === 'endless'">Round {{c.tournamentRound}} &middot; Survival</span>
+                    <span class="pokemon-battle-tournament-streak">{{c.tournamentRoundsWon}} won</span>
+                </div>
+
+                <div class="pokemon-battle-tournament-advancing" ng-if="c.tournamentAdvancing">
+                    Round cleared! Finding your next opponent...
+                </div>
+
+                <div ng-if="!c.tournamentOutcome && !c.tournamentAdvancing && c.tournamentResult">
+                    <div class="row">
+                        <div class="col-xs-6 pokemon-battle-card">
+                            <img ng-if="c.tournamentResult.a.sprite" ng-src="{{c.tournamentResult.a.sprite}}" class="pokemon-battle-sprite" alt="{{c.tournamentResult.a.name}}">
+                            <h4>{{c.tournamentResult.a.name}}</h4>
+                            <div class="pokemon-battle-types">
+                                <span class="sp-badge sp-badge-info" ng-repeat="t in c.tournamentResult.a.types track by t">{{t}}</span>
+                            </div>
+                            <div class="progress pokemon-battle-hp">
+                                <div class="progress-bar" ng-class="c.hpBarClass(c.tournamentHpA, c.tournamentMaxHpA)" ng-style="{width: c.hpPercent(c.tournamentHpA, c.tournamentMaxHpA) + '%'}">
+                                    {{c.tournamentHpA}} / {{c.tournamentMaxHpA}} HP
+                                </div>
+                            </div>
+                            <div class="pokemon-battle-status" ng-if="c.statusLabel(c.tournamentStatusA) || c.tournamentConfusionA.turnsRemaining > 0">
+                                <span class="sp-badge sp-badge-warning" ng-if="c.statusLabel(c.tournamentStatusA)">{{c.statusLabel(c.tournamentStatusA)}}</span>
+                                <span class="sp-badge sp-badge-warning" ng-if="c.tournamentConfusionA.turnsRemaining > 0">Confused</span>
+                            </div>
+                            <div class="pokemon-battle-move-buttons">
+                                <button type="button"
+                                        class="btn btn-default pokemon-battle-move-btn"
+                                        ng-repeat="m in c.tournamentResult.a.moves track by m.name"
+                                        ng-click="c.chooseTournamentMove(m)"
+                                        ng-disabled="c.turnBusy">
+                                    {{m.name}}
+                                    <span class="pokemon-battle-move-meta">{{m.typeName}} &middot; {{m.damageClass}} &middot; {{m.power}} pwr</span>
+                                </button>
+                            </div>
+                            <div class="pokemon-battle-item" ng-if="c.tournamentItemA">
+                                <button type="button"
+                                        class="btn btn-default pokemon-battle-item-btn"
+                                        ng-click="c.useTournamentItem()"
+                                        ng-disabled="c.turnBusy || c.tournamentItemAUsed || c.tournamentItemA.kind !== 'heal'">
+                                    Use {{c.tournamentItemA.name}}<span ng-if="c.tournamentItemAUsed"> (used)</span>
+                                    <span class="pokemon-battle-move-meta">{{c.tournamentItemA.effectText}}</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 pokemon-battle-card">
+                            <img ng-if="c.tournamentResult.b.sprite" ng-src="{{c.tournamentResult.b.sprite}}" class="pokemon-battle-sprite" alt="{{c.tournamentResult.b.name}}">
+                            <h4>{{c.tournamentResult.b.name}}</h4>
+                            <div class="pokemon-battle-types">
+                                <span class="sp-badge sp-badge-info" ng-repeat="t in c.tournamentResult.b.types track by t">{{t}}</span>
+                            </div>
+                            <div class="progress pokemon-battle-hp">
+                                <div class="progress-bar" ng-class="c.hpBarClass(c.tournamentHpB, c.tournamentMaxHpB)" ng-style="{width: c.hpPercent(c.tournamentHpB, c.tournamentMaxHpB) + '%'}">
+                                    {{c.tournamentHpB}} / {{c.tournamentMaxHpB}} HP
+                                </div>
+                            </div>
+                            <div class="pokemon-battle-status" ng-if="c.statusLabel(c.tournamentStatusB) || c.tournamentConfusionB.turnsRemaining > 0">
+                                <span class="sp-badge sp-badge-warning" ng-if="c.statusLabel(c.tournamentStatusB)">{{c.statusLabel(c.tournamentStatusB)}}</span>
+                                <span class="sp-badge sp-badge-warning" ng-if="c.tournamentConfusionB.turnsRemaining > 0">Confused</span>
+                            </div>
+                            <div class="pokemon-battle-move-list">
+                                <span class="sp-badge sp-badge-default" ng-repeat="m in c.tournamentResult.b.moves track by m.name">
+                                    {{m.name}} ({{m.typeName}}, {{m.power}} pwr)
+                                </span>
+                            </div>
+                            <div class="pokemon-battle-item" ng-if="c.tournamentItemB">
+                                <span class="sp-badge sp-badge-default">{{c.tournamentItemB.name}}<span ng-if="c.tournamentItemBUsed"> (used)</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pokemon-battle-log" ng-if="c.battleLog.length">
+                        <div class="pokemon-battle-log-entry" ng-repeat="entry in c.battleLog track by $index">
+                            <span ng-if="entry.itemUsed">
+                                Round {{entry.round}}: {{entry.attackerName}} used {{entry.itemName}}!
+                                <span ng-if="entry.healed !== undefined">Healed {{entry.healed}} HP.</span>
+                            </span>
+                            <span ng-if="entry.statusBlocked === 'sleep'">Round {{entry.round}}: {{entry.attackerName}} is fast asleep!</span>
+                            <span ng-if="entry.statusBlocked === 'freeze'">Round {{entry.round}}: {{entry.attackerName}} is frozen solid!</span>
+                            <span ng-if="entry.statusBlocked === 'paralysis'">Round {{entry.round}}: {{entry.attackerName}} is paralyzed and can't move!</span>
+                            <span ng-if="entry.confusionSelfHit">Round {{entry.round}}: {{entry.attackerName}} is confused and hurt itself! {{entry.damage}} damage.</span>
+                            <span ng-if="entry.statusDamage">Round {{entry.round}}: {{entry.attackerName}} is hurt by {{entry.statusDamage}}! {{entry.damage}} damage.</span>
+                            <span ng-if="!entry.itemUsed && !entry.statusBlocked && !entry.confusionSelfHit && !entry.statusDamage && entry.hit">
+                                Round {{entry.round}}: {{entry.attackerName}} used {{entry.move}} - {{entry.damage}} damage
+                                <span ng-if="entry.effectiveness === 'super'">(super effective!)</span>
+                                <span ng-if="entry.effectiveness === 'weak'">(not very effective)</span>
+                                <span ng-if="entry.effectiveness === 'immune'">(no effect!)</span>
+                                <span ng-if="entry.ailmentInflicted"> The opponent was {{c.ailmentLabel(entry.ailmentInflicted).toLowerCase()}}!</span>
+                                <span ng-if="entry.fainted"> - fainted!</span>
+                            </span>
+                            <span ng-if="!entry.itemUsed && !entry.statusBlocked && !entry.confusionSelfHit && !entry.statusDamage && !entry.hit">
+                                Round {{entry.round}}: {{entry.attackerName}} used {{entry.move}} - missed!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pokemon-battle-tournament-end" ng-if="c.tournamentOutcome === 'champion'">
+                    <div class="pokemon-battle-winner-banner">Champion! {{c.tournamentResult.a.name}} won all {{c.tournamentRoundsWon}} rounds!</div>
+                </div>
+                <div class="pokemon-battle-tournament-end" ng-if="c.tournamentOutcome === 'eliminated'">
+                    <div class="pokemon-battle-winner-banner">Eliminated after {{c.tournamentRoundsWon}} round<span ng-if="c.tournamentRoundsWon !== 1">s</span> won.</div>
+                </div>
+
+                <div class="pokemon-battle-actions" ng-if="c.tournamentOutcome">
+                    <button type="button" class="btn btn-default" ng-click="c.newTournament()">New Tournament</button>
                 </div>
             </div>
         </div>

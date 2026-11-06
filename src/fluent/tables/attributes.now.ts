@@ -61,5 +61,10 @@ export const x_2270446_pokenow_attributes = Table({
         // Pokemon. A single reference field (rather than the full M2M type
         // list) so dashboards can group/sort by it directly.
         primary_type: ReferenceColumn({ label: 'Primary Type', referenceTable: 'x_2270446_pokenow_type' }),
+        // Sum of all 6 base stats from x_2270446_pokenow_poke_stat,
+        // precomputed so Tournament mode can filter/randomize opponents by
+        // overall power with a single indexed query instead of summing
+        // poke_stat rows for every candidate on every round.
+        stat_total: IntegerColumn({ label: 'Stat Total' }),
     },
 })

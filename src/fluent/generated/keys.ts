@@ -413,6 +413,23 @@ declare global {
                 composite: [
                     {
                         table: 'sys_documentation'
+                        id: '009967fe2b5a4c369460dac2c40437f8'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'rounds_won'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '019b0674bbe0407eb77ee6aa36b14b3d'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'pokemon_name'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '03d9a518edf84b11970d89f44f29590d'
                         key: {
                             name: 'x_2270446_pokenow_item_category'
@@ -777,6 +794,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '1dbcf1ea75cb4036a61820b7c9913fc0'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'ended_at'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'ua_table_licensing_config'
                         id: '1e553c20787e4977a1223441bb834103'
                         key: {
@@ -881,6 +907,14 @@ declare global {
                         key: {
                             name: 'x_2270446_pokenow_battle_log'
                             element: 'result_summary'
+                        }
+                    },
+                    {
+                        table: 'sys_choice_set'
+                        id: '2988f3c830234c3fbfea252afd836352'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'length_mode'
                         }
                     },
                     {
@@ -1103,6 +1137,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: '432c38d9157f4f2496c413689f5110f4'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'pokemon'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '4829934bda0c46928196cc39294f8fcb'
                         key: {
                             name: 'x_2270446_pokenow_item'
@@ -1193,6 +1236,15 @@ declare global {
                         key: {
                             name: 'x_2270446_pokenow_attributes'
                             element: 'weight'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '520d8870560947509895acf468334370'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'outcome'
                             language: 'en'
                         }
                     },
@@ -1332,6 +1384,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '5f7e8d985bde4549b9abd7117901036e'
+                        key: {
+                            name: 'x_2270446_pokenow_attributes'
+                            element: 'stat_total'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '5f9cbc7b69084c1ca53834e06706555a'
                         key: {
@@ -1345,6 +1406,14 @@ declare global {
                         key: {
                             name: 'x_2270446_pokenow_attributes'
                             element: 'is_default'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '60e511d0587a43688c6465ecb429c5c8'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'rounds_won'
                         }
                     },
                     {
@@ -1393,6 +1462,25 @@ declare global {
                             name: 'x_2270446_pokenow_battle_log'
                             element: 'result'
                             value: 'win'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '678e4a0128fa407db540bfe1d17619fe'
+                        key: {
+                            name: 'x_2270446_pokenow_attributes'
+                            element: 'stat_total'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '69b95d9dd27343eeb0af33e4c3e54351'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'outcome'
+                            value: 'champion'
                             language: 'en'
                             dependent_value: 'NULL'
                         }
@@ -1456,6 +1544,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '70c27eff77c44e069d4ce40341cfd2d2'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'length_mode'
+                            value: 'fixed'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sp_page'
                         id: '724e12e3054c425b9abe563cf914ef46'
                         key: {
@@ -1477,6 +1576,17 @@ declare global {
                             name: 'x_2270446_pokenow_type'
                             element: 'name'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '7371ac566b064430a6923d349c6d6119'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'difficulty'
+                            value: 'easy'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -1635,6 +1745,13 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_db_object'
+                        id: '7c6e955825434dcd8f90d711c1ea31eb'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '7c9d7c73d7b44c959c473cd490e8c758'
                         key: {
@@ -1752,6 +1869,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '85a29b9f2daa424c80bbbd401dfc5e2d'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'pokemon'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '86831e734b514a30b45ac1ab9c09a863'
                         deleted: true
@@ -1759,6 +1884,13 @@ declare global {
                             name: 'x_2270446_pokenow_attributes'
                             element: 'abilities'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'ua_table_licensing_config'
+                        id: '87f976b5cfdb432586032017599836cb'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
                         }
                     },
                     {
@@ -1775,6 +1907,15 @@ declare global {
                         key: {
                             name: 'x_2270446_pokenow_battle_log'
                             element: 'battle_datetime'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '8971e4de575940959a83e7222f60ab65'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'length_mode'
                             language: 'en'
                         }
                     },
@@ -1876,6 +2017,14 @@ declare global {
                         key: {
                             name: 'x_2270446_pokenow_attributes'
                             element: 'order'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '9412753c2e1e47f2be458e02a8651935'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'outcome'
                         }
                     },
                     {
@@ -2204,6 +2353,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice_set'
+                        id: 'ad1fc7648f1d4b8f8548d4631fb043c5'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'difficulty'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'ad84341346ab424fa341bc82fc14fab5'
                         key: {
@@ -2274,6 +2431,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'b11251b2ac3f4c9f86a9ecf35f6b2442'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'difficulty'
+                            value: 'moderate'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'b1e5f378273b453b8f69ab9a8cd2a44e'
                         key: {
@@ -2340,6 +2508,14 @@ declare global {
                     },
                     {
                         table: 'sys_dictionary'
+                        id: 'bb8023c5ebb74acab2f7555866afcaf4'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'length_mode'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
                         id: 'bba86b8aa70048c191b50ddefb73969f'
                         key: {
                             name: 'x_2270446_pokenow_battle_log'
@@ -2397,11 +2573,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice_set'
+                        id: 'bf4b20a1de3b4186a90999f4a3d1e768'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'outcome'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'c183cbb69c2b4bbdb2e4c6666b00a6ff'
                         key: {
                             name: 'x_2270446_pokenow_attributes'
                             element: 'past_stats'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'c212468c5a2d407ba1bcb90c6baa750e'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'pokemon_name'
                             language: 'en'
                         }
                     },
@@ -2420,6 +2613,17 @@ declare global {
                             name: 'x_2270446_pokenow_attributes'
                             element: 'generation'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'c36d24532cea4f02b7dbe60b8edbeb17'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'difficulty'
+                            value: 'hard'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -2468,6 +2672,14 @@ declare global {
                         id: 'c8ca97e31f0d4530816ec4f20b83ee9c'
                         key: {
                             id: 'pokenow-leaderboard'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'c9d4ad18083145be87fa966274c0fea1'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'ended_at'
                         }
                     },
                     {
@@ -2732,6 +2944,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'e1218ab9b3074fd08a5daff8d3df02dd'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'length_mode'
+                            value: 'endless'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'e1292ad4a39b45fc8e5123bf76b23afe'
                         deleted: true
@@ -2747,6 +2970,23 @@ declare global {
                             name: 'x_2270446_pokenow_battle_log'
                             element: 'result'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'e368cd7331554244a56f604d6e25814c'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'difficulty'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'e54a9603995f466fbaef0767e7a83a5f'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'NULL'
                         }
                     },
                     {
@@ -2797,6 +3037,14 @@ declare global {
                         id: 'eded63697f4b476cbe3cac18e03330e0'
                         key: {
                             name: 'x_2270446_pokenow_attributes'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'ee14b8b9c7ba4f13a20daa7dbad9d718'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'difficulty'
                         }
                     },
                     {
@@ -2893,6 +3141,15 @@ declare global {
                         key: {
                             name: 'x_2270446_pokenow_poke_stat'
                             element: 'pokemon'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'f56dd935631b4901a1339338275d353d'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'NULL'
                             language: 'en'
                         }
                     },
@@ -3020,6 +3277,17 @@ declare global {
                         key: {
                             name: 'x_2270446_pokenow_battle_log'
                             element: 'pokemon_name'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'fc386a021fda48029003f031b9d4bd44'
+                        key: {
+                            name: 'x_2270446_pokenow_tournament_run'
+                            element: 'outcome'
+                            value: 'eliminated'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {

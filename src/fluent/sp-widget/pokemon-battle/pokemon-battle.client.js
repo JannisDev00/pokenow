@@ -91,6 +91,34 @@ api.controller = function ($timeout) {
     c.teamWinner = ''
     c.teamTurnBusy = false
 
+    // ---- Tournament state ----
+    c.tournamentPokemon = ''
+    c.tournamentSearch = ''
+    c.tournamentSearchResults = []
+    c.tournamentSearchFocus = false
+    c.tournamentDifficulty = '' // 'easy' | 'moderate' | 'hard'
+    c.tournamentLengthMode = '' // 'fixed' | 'endless'
+    c.tournamentTotalRounds = 5
+    c.tournamentStarted = false
+    c.tournamentRound = 0
+    c.tournamentRoundsWon = 0
+    c.tournamentFaced = []
+    c.tournamentResult = null
+    c.tournamentOutcome = '' // '' | 'champion' | 'eliminated'
+    c.tournamentAdvancing = false
+    c.tournamentHpA = 0
+    c.tournamentHpB = 0
+    c.tournamentMaxHpA = 0
+    c.tournamentMaxHpB = 0
+    c.tournamentStatusA = { type: null, turnsRemaining: 0 }
+    c.tournamentStatusB = { type: null, turnsRemaining: 0 }
+    c.tournamentConfusionA = { turnsRemaining: 0 }
+    c.tournamentConfusionB = { turnsRemaining: 0 }
+    c.tournamentItemA = null
+    c.tournamentItemB = null
+    c.tournamentItemAUsed = false
+    c.tournamentItemBUsed = false
+
     // ---- shared state ----
     c.loading = false
     c.started = false
@@ -109,6 +137,8 @@ api.controller = function ($timeout) {
         c.mode = ''
         c.teamControlMode = ''
         c.started = false
+        c.tournamentStarted = false
+        c.tournamentOutcome = ''
         c.errorMsg = ''
     }
 
@@ -666,5 +696,258 @@ api.controller = function ($timeout) {
         c.statusB = { type: null, turnsRemaining: 0 }
         c.confusionA = { turnsRemaining: 0 }
         c.confusionB = { turnsRemaining: 0 }
+    }
+
+    // ==================== Tournament ====================
+
+    c.onTournamentSearch = function () {
+        c.tournamentPokemon = ''
+        c.tournamentSearchResults = filterPokemonList(c.tournamentSearch)
+    }
+
+    c.focusTournamentSearch = function () {
+        c.tournamentSearchFocus = true
+    }
+
+    c.blurTournamentSearch = function () {
+        $timeout(function () {
+            c.tournamentSearchFocus = false
+        }, 200)
+    }
+
+    c.pickTournamentPokemon = function (p) {
+        c.tournamentPokemon = p.sys_id
+        c.tournamentSearch = p.name
+        c.tournamentSearchResults = []
+        c.tournamentSearchFocus = false
+    }
+
+    c.randomizeTournamentPokemon = function () {
+        if (!c.data.pokemonList.length) {
+            return
+        }
+        var pool = shuffledCopy(c.data.pokemonList)
+        c.pickTournamentPokemon(pool[0])
+    }
+
+    c.selectTournamentDifficulty = function (difficulty) {
+        c.tournamentDifficulty = difficulty
+    }
+
+    c.selectTournamentLengthMode = function (mode) {
+        c.tournamentLengthMode = mode
+    }
+
+    c.canStartTournament = function () {
+        return !!c.tournamentPokemon && !!c.tournamentDifficulty && !!c.tournamentLengthMode && !c.loading
+    }
+
+    c.isTournamentFinalRound = function () {
+        return c.tournamentLengthMode === 'fixed' && c.tournamentRound >= c.tournamentTotalRounds
+    }
+
+    function loadTournamentRound(result) {
+        c.tournamentResult = result
+        c.tournamentMaxHpA = result.a.maxHp
+        c.tournamentMaxHpB = result.b.maxHp
+        c.tournamentHpA = c.tournamentMaxHpA
+        c.tournamentHpB = c.tournamentMaxHpB
+        c.tournamentItemA = result.itemA
+        c.tournamentItemB = result.itemB
+        c.tournamentItemAUsed = false
+        c.tournamentItemBUsed = false
+        c.tournamentStatusA = { type: null, turnsRemaining: 0 }
+        c.tournamentStatusB = { type: null, turnsRemaining: 0 }
+        c.tournamentConfusionA = { turnsRemaining: 0 }
+        c.tournamentConfusionB = { turnsRemaining: 0 }
+        c.battleLog = []
+        c.currentRound = 1
+    }
+
+    function nextTournamentRound() {
+        c.loading = true
+        c.server
+            .get({
+                action: 'tournamentSetup',
+                pokemonA: c.tournamentPokemon,
+                difficulty: c.tournamentDifficulty,
+                excludeSysIds: c.tournamentFaced,
+            })
+            .then(function (r) {
+                c.loading = false
+                if (r.data.error) {
+                    c.errorMsg = r.data.error
+                    return
+                }
+                c.tournamentFaced.push(r.data.result.b.sys_id)
+                c.tournamentRound++
+                loadTournamentRound(r.data.result)
+            })
+    }
+
+    c.startTournament = function () {
+        if (!c.canStartTournament()) {
+            return
+        }
+        c.loading = true
+        c.errorMsg = ''
+        c.tournamentOutcome = ''
+        c.tournamentRound = 1
+        c.tournamentRoundsWon = 0
+        c.tournamentFaced = []
+
+        c.server
+            .get({
+                action: 'tournamentSetup',
+                pokemonA: c.tournamentPokemon,
+                difficulty: c.tournamentDifficulty,
+                excludeSysIds: [],
+            })
+            .then(function (r) {
+                c.loading = false
+                if (r.data.error) {
+                    c.errorMsg = r.data.error
+                    return
+                }
+                c.tournamentFaced.push(r.data.result.b.sys_id)
+                loadTournamentRound(r.data.result)
+                c.tournamentStarted = true
+            })
+    }
+
+    function handleTournamentTurnResponse(r) {
+        if (r.data.error) {
+            c.errorMsg = r.data.error
+            c.turnBusy = false
+            return
+        }
+        playRoundLog(
+            r.data.result.log,
+            0,
+            function () {
+                c.turnBusy = false
+                c.currentRound++
+                c.tournamentStatusA = r.data.result.statusA
+                c.tournamentStatusB = r.data.result.statusB
+                c.tournamentConfusionA = r.data.result.confusionA
+                c.tournamentConfusionB = r.data.result.confusionB
+                if (r.data.result.itemAUsedNow) {
+                    c.tournamentItemAUsed = true
+                }
+                if (r.data.result.itemBUsedNow) {
+                    c.tournamentItemBUsed = true
+                }
+
+                var outcome = r.data.result.tournamentOutcome
+                if (outcome === 'advance') {
+                    c.tournamentRoundsWon++
+                    c.tournamentAdvancing = true
+                    $timeout(function () {
+                        c.tournamentAdvancing = false
+                        nextTournamentRound()
+                    }, 1500)
+                } else if (outcome === 'champion') {
+                    c.tournamentRoundsWon++
+                    c.tournamentOutcome = 'champion'
+                } else if (outcome === 'eliminated') {
+                    c.tournamentOutcome = 'eliminated'
+                }
+            },
+            function (entry) {
+                c.tournamentHpA = entry.hpA
+                c.tournamentHpB = entry.hpB
+            }
+        )
+    }
+
+    c.chooseTournamentMove = function (move) {
+        if (c.turnBusy || c.tournamentOutcome || c.tournamentAdvancing || !c.tournamentStarted) {
+            return
+        }
+        c.turnBusy = true
+        c.errorMsg = ''
+
+        var bMoveNames = []
+        for (var i = 0; i < c.tournamentResult.b.moves.length; i++) {
+            bMoveNames.push(c.tournamentResult.b.moves[i].name)
+        }
+
+        c.server
+            .get({
+                action: 'tournamentTurn',
+                pokemonA: c.tournamentPokemon,
+                pokemonB: c.tournamentResult.b.sys_id,
+                difficulty: c.tournamentDifficulty,
+                lengthMode: c.tournamentLengthMode,
+                roundsWon: c.tournamentRoundsWon,
+                isFinalRound: c.isTournamentFinalRound(),
+                chosenMove: move.name,
+                bMoveNames: bMoveNames,
+                hpA: c.tournamentHpA,
+                hpB: c.tournamentHpB,
+                statusA: c.tournamentStatusA,
+                statusB: c.tournamentStatusB,
+                confusionA: c.tournamentConfusionA,
+                confusionB: c.tournamentConfusionB,
+                itemAName: c.tournamentItemA ? c.tournamentItemA.rawName : null,
+                itemBName: c.tournamentItemB ? c.tournamentItemB.rawName : null,
+                itemBUsed: c.tournamentItemBUsed,
+            })
+            .then(handleTournamentTurnResponse)
+    }
+
+    c.useTournamentItem = function () {
+        if (
+            c.turnBusy ||
+            c.tournamentOutcome ||
+            c.tournamentAdvancing ||
+            !c.tournamentStarted ||
+            c.tournamentItemAUsed ||
+            !c.tournamentItemA ||
+            c.tournamentItemA.kind !== 'heal'
+        ) {
+            return
+        }
+        c.turnBusy = true
+        c.errorMsg = ''
+
+        var bMoveNames = []
+        for (var i = 0; i < c.tournamentResult.b.moves.length; i++) {
+            bMoveNames.push(c.tournamentResult.b.moves[i].name)
+        }
+
+        c.server
+            .get({
+                action: 'tournamentTurn',
+                pokemonA: c.tournamentPokemon,
+                pokemonB: c.tournamentResult.b.sys_id,
+                difficulty: c.tournamentDifficulty,
+                lengthMode: c.tournamentLengthMode,
+                roundsWon: c.tournamentRoundsWon,
+                isFinalRound: c.isTournamentFinalRound(),
+                useItem: true,
+                bMoveNames: bMoveNames,
+                hpA: c.tournamentHpA,
+                hpB: c.tournamentHpB,
+                statusA: c.tournamentStatusA,
+                statusB: c.tournamentStatusB,
+                confusionA: c.tournamentConfusionA,
+                confusionB: c.tournamentConfusionB,
+                itemAName: c.tournamentItemA.rawName,
+                itemBName: c.tournamentItemB ? c.tournamentItemB.rawName : null,
+                itemBUsed: c.tournamentItemBUsed,
+            })
+            .then(handleTournamentTurnResponse)
+    }
+
+    c.newTournament = function () {
+        c.tournamentStarted = false
+        c.tournamentOutcome = ''
+        c.tournamentResult = null
+        c.tournamentRound = 0
+        c.tournamentRoundsWon = 0
+        c.tournamentFaced = []
+        c.battleLog = []
+        c.errorMsg = ''
     }
 }

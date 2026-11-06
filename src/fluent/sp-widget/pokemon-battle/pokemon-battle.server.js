@@ -9,6 +9,7 @@
     var ITEM_TABLE = 'x_2270446_pokenow_item'
     var ITEM_CATEGORY_TABLE = 'x_2270446_pokenow_item_category'
     var BATTLE_LOG_TABLE = 'x_2270446_pokenow_battle_log'
+    var TOURNAMENT_RUN_TABLE = 'x_2270446_pokenow_tournament_run'
 
     // Cap on how many of a Pokemon's known moves we'll fetch/check before
     // giving up on finding 4 usable ones - bounds worst-case REST calls per
@@ -318,6 +319,62 @@
         }
 
         return { wins: wins, losses: losses, recentBattles: history }
+    }
+
+    // Picks a random opponent for the next Tournament round, filtered by
+    // stat_total relative to the player's own (easy: at or below; moderate:
+    // at least 75%; hard: at or above - no upper bound on moderate/hard, per
+    // spec). Avoids repeat opponents within the run where possible, but
+    // falls back to allowing repeats rather than dead-ending a long survival
+    // run once the eligible pool is exhausted.
+    function pickTournamentOpponent(playerSysId, playerStatTotal, difficulty, excludeSysIds) {
+        function queryCandidates(allowRepeats) {
+            var qgr = new GlideRecord(ATTR_TABLE)
+            qgr.addQuery('sys_id', '!=', playerSysId)
+            qgr.addQuery('stat_total', '>', 0)
+            if (difficulty === 'easy') {
+                qgr.addQuery('stat_total', '<=', playerStatTotal)
+            } else if (difficulty === 'moderate') {
+                qgr.addQuery('stat_total', '>=', Math.ceil(playerStatTotal * 0.75))
+            } else {
+                qgr.addQuery('stat_total', '>=', playerStatTotal)
+            }
+            if (!allowRepeats && excludeSysIds && excludeSysIds.length) {
+                qgr.addQuery('sys_id', 'NOT IN', excludeSysIds.join(','))
+            }
+            qgr.setLimit(1000)
+            qgr.query()
+            var ids = []
+            while (qgr.next()) {
+                ids.push(qgr.getUniqueValue())
+            }
+            return ids
+        }
+
+        var candidates = queryCandidates(false)
+        if (!candidates.length) {
+            candidates = queryCandidates(true)
+        }
+        if (!candidates.length) {
+            return null
+        }
+        return candidates[Math.floor(Math.random() * candidates.length)]
+    }
+
+    // Writes the single summary row for a finished Tournament run -
+    // deliberately not battle_log, so Tournament results stay out of the
+    // regular 1v1/4v4 win/loss counters and the "Wins by Pokemon" dashboard.
+    function finalizeTournamentRun(pokemonSysId, pokemonName, difficulty, lengthMode, roundsWon, outcome) {
+        var trGr = new GlideRecord(TOURNAMENT_RUN_TABLE)
+        trGr.initialize()
+        trGr.setValue('pokemon', pokemonSysId)
+        trGr.setValue('pokemon_name', pokemonName)
+        trGr.setValue('difficulty', difficulty)
+        trGr.setValue('length_mode', lengthMode)
+        trGr.setValue('rounds_won', roundsWon)
+        trGr.setValue('outcome', outcome)
+        trGr.setValue('ended_at', new GlideDateTime().getValue())
+        trGr.insert()
     }
 
     // Looks up a move's power/accuracy/type/damage class/ailment from the
@@ -1067,6 +1124,184 @@
             bRecord: bRecord,
             itemAUsedNow: actionA.type === 'item',
             itemBUsedNow: actionB.type === 'item',
+        }
+        return
+    }
+
+    // Tournament: picks the next round's random opponent (respecting
+    // difficulty and already-faced exclusions) and sets up the fight the
+    // same way 1v1's 'setup' does. No win/loss is recorded here - that only
+    // happens once a round actually concludes, in 'tournamentTurn'.
+    if (input && input.action === 'tournamentSetup') {
+        if (!input.pokemonA || !input.difficulty) {
+            data.error = 'Missing tournament setup data.'
+            return
+        }
+
+        var typeNameByIdT = loadIdNameMap(TYPE_TABLE)
+        var typeIdByNameT = {}
+        for (var tidT in typeNameByIdT) {
+            typeIdByNameT[typeNameByIdT[tidT]] = tidT
+        }
+        var statMapT = loadIdNameMap(STAT_TABLE)
+
+        var playerGr = new GlideRecord(ATTR_TABLE)
+        if (!playerGr.get(input.pokemonA)) {
+            data.error = 'Could not load your Pokemon.'
+            return
+        }
+        var playerStatTotal = parseInt(playerGr.getValue('stat_total'), 10) || 0
+
+        var excludeSysIds = (input.excludeSysIds || []).concat([input.pokemonA])
+        var opponentSysId = pickTournamentOpponent(input.pokemonA, playerStatTotal, input.difficulty, excludeSysIds)
+        if (!opponentSysId) {
+            data.error = 'No eligible opponents found for this difficulty.'
+            return
+        }
+
+        var aT = loadPokemon(input.pokemonA, typeNameByIdT, statMapT)
+        var bT = loadPokemon(opponentSysId, typeNameByIdT, statMapT)
+        if (!aT || !bT) {
+            data.error = 'Could not load one or both Pokemon.'
+            return
+        }
+
+        var aMovesT = pickMoves(aT.movesRaw, typeIdByNameT, typeNameByIdT)
+        var bMovesT = pickMoves(bT.movesRaw, typeIdByNameT, typeNameByIdT)
+        var healPoolT = loadHealItemPool()
+
+        data.result = {
+            a: {
+                sys_id: aT.sys_id,
+                name: aT.name,
+                sprite: aT.sprite,
+                types: aT.types,
+                stats: aT.stats,
+                statTotal: aT.statTotal,
+                maxHp: aT.stats.hp || 1,
+                moves: aMovesT,
+            },
+            b: {
+                sys_id: bT.sys_id,
+                name: bT.name,
+                sprite: bT.sprite,
+                types: bT.types,
+                stats: bT.stats,
+                statTotal: bT.statTotal,
+                maxHp: bT.stats.hp || 1,
+                moves: bMovesT,
+            },
+            itemA: pickRandomAssignedItem(healPoolT),
+            itemB: pickRandomAssignedItem(healPoolT),
+        }
+        return
+    }
+
+    // Tournament: resolves one combat turn (identical mechanics to 1v1's
+    // 'turn'), but never touches updatePokemonRecord/battle_log. A finished
+    // round either advances to the next opponent, clinches the champion
+    // title (fixed mode, final round won), or ends the run (any loss/tie) -
+    // the run's single summary row is written here via finalizeTournamentRun.
+    if (input && input.action === 'tournamentTurn') {
+        if (!input.pokemonA || !input.pokemonB || (!input.chosenMove && !input.useItem)) {
+            data.error = 'Missing battle turn data.'
+            return
+        }
+
+        var typeNameById3T = loadIdNameMap(TYPE_TABLE)
+        var typeIdByName3T = {}
+        for (var tid3T in typeNameById3T) {
+            typeIdByName3T[typeNameById3T[tid3T]] = tid3T
+        }
+        var statMap3T = loadIdNameMap(STAT_TABLE)
+        var effMapT = loadTypeEffectivenessMap()
+
+        var a3T = loadPokemon(input.pokemonA, typeNameById3T, statMap3T)
+        var b3T = loadPokemon(input.pokemonB, typeNameById3T, statMap3T)
+        if (!a3T || !b3T) {
+            data.error = 'Could not load one or both Pokemon.'
+            return
+        }
+        a3T.typeIds = mapTypeIds(a3T.types, typeIdByName3T)
+        b3T.typeIds = mapTypeIds(b3T.types, typeIdByName3T)
+
+        var maxHpAT = a3T.stats.hp || 1
+        var maxHpBT = b3T.stats.hp || 1
+        var hpAT = clampHp(input.hpA, maxHpAT)
+        var hpBT = clampHp(input.hpB, maxHpBT)
+        var statusAT = normalizeStatus(input.statusA)
+        var statusBT = normalizeStatus(input.statusB)
+        var confusionAT = normalizeConfusion(input.confusionA)
+        var confusionBT = normalizeConfusion(input.confusionB)
+
+        var itemAEffectT = input.itemAName ? ITEM_EFFECTS[input.itemAName] : null
+        var itemBEffectT = input.itemBName ? ITEM_EFFECTS[input.itemBName] : null
+
+        var actionAT
+        if (input.useItem && itemAEffectT && itemAEffectT.kind === 'heal') {
+            actionAT = { type: 'item', name: input.itemAName, effect: itemAEffectT }
+        } else {
+            var moveAT = getOrFetchMove(input.chosenMove, typeIdByName3T, typeNameById3T)
+            if (!moveAT) {
+                data.error = 'Could not resolve the selected move.'
+                return
+            }
+            actionAT = { type: 'move', move: moveAT }
+        }
+
+        var actionBT
+        var bWantsItemT = itemBEffectT && itemBEffectT.kind === 'heal' && !input.itemBUsed && hpBT / maxHpBT <= 0.3
+        if (bWantsItemT) {
+            actionBT = { type: 'item', name: input.itemBName, effect: itemBEffectT }
+        } else {
+            var bMoveNamesT = input.bMoveNames || []
+            var bMoveNameT = bMoveNamesT.length ? bMoveNamesT[Math.floor(Math.random() * bMoveNamesT.length)] : 'Struggle'
+            var moveBT = getOrFetchMove(bMoveNameT, typeIdByName3T, typeNameById3T)
+            if (!moveBT) {
+                moveBT = { name: 'Struggle', power: 50, accuracy: 100, damageClass: 'physical', typeName: '', ailment: 'none', ailmentChance: 0, minTurns: 0, maxTurns: 0 }
+            }
+            actionBT = { type: 'move', move: moveBT }
+        }
+
+        var roundT = resolveActivePairRound(a3T, b3T, actionAT, actionBT, hpAT, hpBT, maxHpAT, maxHpBT, statusAT, statusBT, confusionAT, confusionBT, effMapT, typeIdByName3T)
+
+        var winnerT = null
+        if (roundT.hpA <= 0 && roundT.hpB <= 0) {
+            winnerT = 'Tie'
+        } else if (roundT.hpA <= 0) {
+            winnerT = b3T.name
+        } else if (roundT.hpB <= 0) {
+            winnerT = a3T.name
+        }
+
+        var tournamentOutcome = null
+        if (winnerT) {
+            var roundsWonSoFar = parseInt(input.roundsWon, 10) || 0
+            if (winnerT === a3T.name) {
+                if (input.isFinalRound) {
+                    finalizeTournamentRun(input.pokemonA, a3T.name, input.difficulty, input.lengthMode, roundsWonSoFar + 1, 'champion')
+                    tournamentOutcome = 'champion'
+                } else {
+                    tournamentOutcome = 'advance'
+                }
+            } else {
+                finalizeTournamentRun(input.pokemonA, a3T.name, input.difficulty, input.lengthMode, roundsWonSoFar, 'eliminated')
+                tournamentOutcome = 'eliminated'
+            }
+        }
+
+        data.result = {
+            log: roundT.log,
+            hpA: roundT.hpA,
+            hpB: roundT.hpB,
+            statusA: roundT.statusA,
+            statusB: roundT.statusB,
+            confusionA: roundT.confusionA,
+            confusionB: roundT.confusionB,
+            winner: winnerT,
+            tournamentOutcome: tournamentOutcome,
+            itemAUsedNow: actionAT.type === 'item',
+            itemBUsedNow: actionBT.type === 'item',
         }
         return
     }

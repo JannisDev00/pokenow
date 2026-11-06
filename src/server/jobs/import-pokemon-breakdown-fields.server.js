@@ -1,6 +1,7 @@
 ;(function () {
     var ATTR_TABLE = 'x_2270446_pokenow_attributes'
     var POKE_TYPE_TABLE = 'x_2270446_pokenow_poke_type'
+    var POKE_STAT_TABLE = 'x_2270446_pokenow_poke_stat'
     var BATTLE_LOG_TABLE = 'x_2270446_pokenow_battle_log'
 
     // Fixed national dex ID ranges per generation - avoids an extra PokeAPI
@@ -45,6 +46,18 @@
         return tgr.next() ? tgr.getValue('type') : null
     }
 
+    function statTotal(pokemonSysId) {
+        var sgr = new GlideRecord(POKE_STAT_TABLE)
+        sgr.addQuery('pokemon', pokemonSysId)
+        sgr.setLimit(10)
+        sgr.query()
+        var total = 0
+        while (sgr.next()) {
+            total += parseInt(sgr.getValue('base_stat'), 10) || 0
+        }
+        return total
+    }
+
     function capitalize(str) {
         if (!str) {
             return str
@@ -52,10 +65,10 @@
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
 
-    gs.info('PokeNow breakdown fields backfill: finding Pokemon without a generation...')
+    gs.info('PokeNow breakdown fields backfill: finding Pokemon without a stat total...')
 
     var gr = new GlideRecord(ATTR_TABLE)
-    gr.addQuery('generation', '')
+    gr.addQuery('stat_total', '')
     gr.orderBy('name')
     gr.setLimit(2000)
     gr.query()
@@ -68,8 +81,9 @@
             var dexId = speciesDexId(gr.getValue('species'))
             var generation = dexId ? generationForDexId(dexId) : null
             var typeSysId = primaryTypeSysId(gr.getUniqueValue())
+            var total = statTotal(gr.getUniqueValue())
 
-            if (!generation && !typeSysId) {
+            if (!generation && !typeSysId && !total) {
                 skipped++
                 continue
             }
@@ -80,6 +94,7 @@
             if (typeSysId) {
                 gr.setValue('primary_type', typeSysId)
             }
+            gr.setValue('stat_total', total)
             gr.update()
             processed++
         } catch (e) {
