@@ -6,7 +6,7 @@ import { ScheduledScript } from '@servicenow/sdk/core'
 // own tables, and stores one representative English effect/flavor text per
 // item rather than the full per-game-version history.
 //
-// Optional system property "x_1850095_pokenow.import.items.limit" caps how
+// Optional system property "x_2270446_pokenow.import.items.limit" caps how
 // many items are processed per run - useful for a quick test before running
 // the full ~2223 item import.
 ScheduledScript({

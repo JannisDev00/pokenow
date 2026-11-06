@@ -1,8 +1,8 @@
 (function () {
-    var ITEM_TABLE = 'x_1850095_pokenow_item'
-    var CATEGORY_TABLE = 'x_1850095_pokenow_item_category'
-    var ATTRIBUTE_TABLE = 'x_1850095_pokenow_item_attribute'
-    var ATTRIBUTE_MAP_TABLE = 'x_1850095_pokenow_item_attribute_map'
+    var ITEM_TABLE = 'x_2270446_pokenow_item'
+    var CATEGORY_TABLE = 'x_2270446_pokenow_item_category'
+    var ATTRIBUTE_TABLE = 'x_2270446_pokenow_item_attribute'
+    var ATTRIBUTE_MAP_TABLE = 'x_2270446_pokenow_item_attribute_map'
 
     function fetchJson(functionName, params) {
         var rm = new sn_ws.RESTMessageV2('PokeAPI', functionName)
@@ -85,7 +85,7 @@
 
     var results = list.results
 
-    var limitProp = gs.getProperty('x_1850095_pokenow.import.items.limit')
+    var limitProp = gs.getProperty('x_2270446_pokenow.import.items.limit')
     if (limitProp) {
         var limitNum = parseInt(limitProp, 10)
         if (!isNaN(limitNum) && limitNum > 0 && limitNum < results.length) {

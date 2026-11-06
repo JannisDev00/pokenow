@@ -14,8 +14,8 @@ import {
 // tables (see poke-type.now.ts, poke-stat.now.ts, poke-ability.now.ts) so
 // they're filterable/reportable; the remaining attributes are long-tail data
 // that's rarely queried, so they stay as JSON to preserve full structure.
-export const x_1850095_pokenow_attributes = Table({
-    name: 'x_1850095_pokenow_attributes',
+export const x_2270446_pokenow_attributes = Table({
+    name: 'x_2270446_pokenow_attributes',
     label: 'Pokemons',
     display: 'name',
     allowWebServiceAccess: true,

@@ -1,5 +1,5 @@
 (function () {
-    var ATTR_TABLE = 'x_1850095_pokenow_attributes'
+    var ATTR_TABLE = 'x_2270446_pokenow_attributes'
 
     gs.info('PokeNow image backfill: finding Pokemon without an image...')
 

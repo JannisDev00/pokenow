@@ -6,7 +6,7 @@ import { ScheduledScript } from '@servicenow/sdk/core'
 // into their own tables, and downloads the default + official artwork
 // sprites as attachments.
 //
-// Optional system property "x_1850095_pokenow.import.limit" caps how many
+// Optional system property "x_2270446_pokenow.import.limit" caps how many
 // Pokemon are processed per run - useful for a quick test before running
 // the full ~1,351 Pokemon import, which will take a while given it makes
 // roughly 3 outbound HTTP calls per Pokemon (detail + 2 images).

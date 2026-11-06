@@ -3145,7 +3145,7 @@ interface sys_ux_experience_category extends sys_metadata {
     description: Any;
 }
 
-interface x_1850095_pokenow_ability {
+interface x_2270446_pokenow_ability {
     sys_id?: Any;
     sys_updated_by: String;
     sys_created_on: Any;
@@ -19573,15 +19573,15 @@ interface kb_checklist_question extends sys_metadata {
     order: Number;
 }
 
-interface x_1850095_pokenow_poke_type {
+interface x_2270446_pokenow_poke_type {
     sys_id?: Any;
     sys_updated_by: String;
-    pokemon?: x_1850095_pokenow_attributes & ㅤGlideElement<"x_1850095_pokenow_attributes">;
+    pokemon?: x_2270446_pokenow_attributes & ㅤGlideElement<"x_2270446_pokenow_attributes">;
     sys_created_on: Any;
     sys_mod_count: Number;
     slot: Number;
     sys_updated_on: Any;
-    type?: x_1850095_pokenow_type & ㅤGlideElement<"x_1850095_pokenow_type">;
+    type?: x_2270446_pokenow_type & ㅤGlideElement<"x_2270446_pokenow_type">;
     sys_created_by: String;
 }
 
@@ -47910,10 +47910,10 @@ interface sys_import_set_row_error {
     run_history: sys_import_set_run & ㅤGlideElement<"sys_import_set_run">;
 }
 
-interface x_1850095_pokenow_type_effectiveness {
+interface x_2270446_pokenow_type_effectiveness {
     sys_id?: Any;
-    attacking_type?: x_1850095_pokenow_type & ㅤGlideElement<"x_1850095_pokenow_type">;
-    defending_type?: x_1850095_pokenow_type & ㅤGlideElement<"x_1850095_pokenow_type">;
+    attacking_type?: x_2270446_pokenow_type & ㅤGlideElement<"x_2270446_pokenow_type">;
+    defending_type?: x_2270446_pokenow_type & ㅤGlideElement<"x_2270446_pokenow_type">;
     sys_updated_by: String;
     multiplier: Number;
     sys_created_on: Any;
@@ -52793,7 +52793,7 @@ interface sys_repo_config {
     authentication: String;
 }
 
-interface x_1850095_inc_help_fw_import extends sys_import_set_row {
+interface x_2270446_inc_help_fw_import extends sys_import_set_row {
     u_name: String;
     u_asset_tag: String;
     u_ip_address: String;
@@ -53075,14 +53075,14 @@ interface sys_sg_event_action_m2m_popup extends sys_metadata {
     order: Number;
 }
 
-interface x_1850095_pokenow_poke_ability {
+interface x_2270446_pokenow_poke_ability {
     sys_id?: Any;
     sys_updated_by: String;
-    pokemon?: x_1850095_pokenow_attributes & ㅤGlideElement<"x_1850095_pokenow_attributes">;
+    pokemon?: x_2270446_pokenow_attributes & ㅤGlideElement<"x_2270446_pokenow_attributes">;
     sys_created_on: Any;
     is_hidden: Boolean;
     sys_mod_count: Number;
-    ability?: x_1850095_pokenow_ability & ㅤGlideElement<"x_1850095_pokenow_ability">;
+    ability?: x_2270446_pokenow_ability & ㅤGlideElement<"x_2270446_pokenow_ability">;
     slot: Number;
     sys_updated_on: Any;
     sys_created_by: String;
@@ -56378,7 +56378,7 @@ interface pa_text_indexes {
     sys_created_by: String;
 }
 
-interface x_1850095_inc_help_request {
+interface x_2270446_inc_help_request {
     short_description?: String;
     due_date: Any;
     sys_mod_count: Number;
@@ -70232,11 +70232,11 @@ interface syslog_pa_dm0006 extends syslog0006 {
     sub_process: String;
 }
 
-interface x_1850095_pokenow_poke_stat {
+interface x_2270446_pokenow_poke_stat {
     sys_id?: Any;
-    stat?: x_1850095_pokenow_stat & ㅤGlideElement<"x_1850095_pokenow_stat">;
+    stat?: x_2270446_pokenow_stat & ㅤGlideElement<"x_2270446_pokenow_stat">;
     sys_updated_by: String;
-    pokemon?: x_1850095_pokenow_attributes & ㅤGlideElement<"x_1850095_pokenow_attributes">;
+    pokemon?: x_2270446_pokenow_attributes & ㅤGlideElement<"x_2270446_pokenow_attributes">;
     sys_created_on: Any;
     sys_mod_count: Number;
     base_stat: Number;
@@ -72187,7 +72187,7 @@ interface cmdb_ci_mainframe_hardware extends cmdb_ci_computer {
     lease_id: String;
 }
 
-interface x_1850095_pokenow_attributes {
+interface x_2270446_pokenow_attributes {
     past_stats: Any;
     sys_updated_on: Any;
     past_types: Any;
@@ -77101,7 +77101,7 @@ interface fx_currency_instance {
     sys_created_by: String;
 }
 
-interface x_1850095_pokenow_type {
+interface x_2270446_pokenow_type {
     sys_id?: Any;
     sys_updated_by: String;
     sys_created_on: Any;
@@ -104158,7 +104158,7 @@ interface cmdb_ci_endpoint_msmq extends cmdb_ci_endpoint {
     lease_id: String;
 }
 
-interface x_1850095_pokenow_stat {
+interface x_2270446_pokenow_stat {
     sys_id?: Any;
     sys_updated_by: String;
     sys_created_on: Any;
@@ -119769,12 +119769,12 @@ interface on_call_user_preference {
     sys_created_by: String;
 }
 
-interface x_1850095_pokenow_move {
+interface x_2270446_pokenow_move {
     pp: Number;
     sys_mod_count: Number;
     accuracy: Number;
     sys_updated_on: Any;
-    type: x_1850095_pokenow_type & ㅤGlideElement<"x_1850095_pokenow_type">;
+    type: x_2270446_pokenow_type & ㅤGlideElement<"x_2270446_pokenow_type">;
     sys_id?: Any;
     sys_updated_by: String;
     sys_created_on: Any;
@@ -138703,7 +138703,7 @@ interface Tables {
     sn_vsc_security_policy_execution_history: sn_vsc_security_policy_execution_history;
     pa_m2m_indicator_tags: pa_m2m_indicator_tags;
     sys_ux_experience_category: sys_ux_experience_category;
-    x_1850095_pokenow_ability: x_1850095_pokenow_ability;
+    x_2270446_pokenow_ability: x_2270446_pokenow_ability;
     sa_service_group_member: sa_service_group_member;
     v_pa_par_combined_dashboard: v_pa_par_combined_dashboard;
     sys_ux_ribbon_config_setting: sys_ux_ribbon_config_setting;
@@ -139254,7 +139254,7 @@ interface Tables {
     sys_sg_applet_launcher_header: sys_sg_applet_launcher_header;
     sys_mi_request: sys_mi_request;
     kb_checklist_question: kb_checklist_question;
-    x_1850095_pokenow_poke_type: x_1850095_pokenow_poke_type;
+    x_2270446_pokenow_poke_type: x_2270446_pokenow_poke_type;
     cmdb_ci_infra_service: cmdb_ci_infra_service;
     sys_declarative_action_render_mode: sys_declarative_action_render_mode;
     sn_nb_action_resource_generator: sn_nb_action_resource_generator;
@@ -140375,7 +140375,7 @@ interface Tables {
     sys_uxa_cohort: sys_uxa_cohort;
     sys_rest_message_fn_headers: sys_rest_message_fn_headers;
     sys_import_set_row_error: sys_import_set_row_error;
-    x_1850095_pokenow_type_effectiveness: x_1850095_pokenow_type_effectiveness;
+    x_2270446_pokenow_type_effectiveness: x_2270446_pokenow_type_effectiveness;
     sys_ux_m2m_interoperable_route_applicability: sys_ux_m2m_interoperable_route_applicability;
     cmdb_ci_installed_bundles: cmdb_ci_installed_bundles;
     cmdb_ci_fc_disk: cmdb_ci_fc_disk;
@@ -140589,13 +140589,13 @@ interface Tables {
     sys_archive_destroy_chunk: sys_archive_destroy_chunk;
     sp_metatag_variable: sp_metatag_variable;
     sys_repo_config: sys_repo_config;
-    x_1850095_inc_help_fw_import: x_1850095_inc_help_fw_import;
+    x_2270446_inc_help_fw_import: x_2270446_inc_help_fw_import;
     cmdb_ci_service_group: cmdb_ci_service_group;
     cmdb_ci_appl_sap_server: cmdb_ci_appl_sap_server;
     sys_scheduler_assignment: sys_scheduler_assignment;
     sysevent_queue_stats: sysevent_queue_stats;
     sys_sg_event_action_m2m_popup: sys_sg_event_action_m2m_popup;
-    x_1850095_pokenow_poke_ability: x_1850095_pokenow_poke_ability;
+    x_2270446_pokenow_poke_ability: x_2270446_pokenow_poke_ability;
     open_nlu_dialog_act: open_nlu_dialog_act;
     cmdb_ci_qualifier_boundary_connection: cmdb_ci_qualifier_boundary_connection;
     sla_breakdown_definition: sla_breakdown_definition;
@@ -140752,7 +140752,7 @@ interface Tables {
     sys_interaction_pattern: sys_interaction_pattern;
     asmt_m2m_recipientslist_survey: asmt_m2m_recipientslist_survey;
     pa_text_indexes: pa_text_indexes;
-    x_1850095_inc_help_request: x_1850095_inc_help_request;
+    x_2270446_inc_help_request: x_2270446_inc_help_request;
     live_link: live_link;
     sys_sg_ui_element: sys_sg_ui_element;
     sys_cs_custom_adapter_property: sys_cs_custom_adapter_property;
@@ -141415,7 +141415,7 @@ interface Tables {
     fx_currency: fx_currency;
     sys_atf_step_config_category: sys_atf_step_config_category;
     syslog_pa_dm0006: syslog_pa_dm0006;
-    x_1850095_pokenow_poke_stat: x_1850095_pokenow_poke_stat;
+    x_2270446_pokenow_poke_stat: x_2270446_pokenow_poke_stat;
     syslog_pa_dm0005: syslog_pa_dm0005;
     syslog_pa_dm0007: syslog_pa_dm0007;
     cmdb_ci_endpoint_cloud_db_instance: cmdb_ci_endpoint_cloud_db_instance;
@@ -141515,7 +141515,7 @@ interface Tables {
     upgrade_preview: upgrade_preview;
     account_subscription_entitlement: account_subscription_entitlement;
     cmdb_ci_mainframe_hardware: cmdb_ci_mainframe_hardware;
-    x_1850095_pokenow_attributes: x_1850095_pokenow_attributes;
+    x_2270446_pokenow_attributes: x_2270446_pokenow_attributes;
     alm_transfer_order: alm_transfer_order;
     ua_user_role_ct: ua_user_role_ct;
     svc_model_obj_impactrule: svc_model_obj_impactrule;
@@ -141746,7 +141746,7 @@ interface Tables {
     alm_asset_creation_queue: alm_asset_creation_queue;
     sn_bm_client_document: sn_bm_client_document;
     fx_currency_instance: fx_currency_instance;
-    x_1850095_pokenow_type: x_1850095_pokenow_type;
+    x_2270446_pokenow_type: x_2270446_pokenow_type;
     cmdb_ci_endpoint_dctm_index: cmdb_ci_endpoint_dctm_index;
     sys_error_classifier: sys_error_classifier;
     scan_table_check: scan_table_check;
@@ -142987,7 +142987,7 @@ interface Tables {
     promin_field_recommendation: promin_field_recommendation;
     cmdb_ire_output_target_item: cmdb_ire_output_target_item;
     cmdb_ci_endpoint_msmq: cmdb_ci_endpoint_msmq;
-    x_1850095_pokenow_stat: x_1850095_pokenow_stat;
+    x_2270446_pokenow_stat: x_2270446_pokenow_stat;
     automation_error_msg_blacklist: automation_error_msg_blacklist;
     syntax_editor_macro: syntax_editor_macro;
     sys_orchestrator_action: sys_orchestrator_action;
@@ -143694,7 +143694,7 @@ interface Tables {
     instance: instance;
     jms_credentials: jms_credentials;
     on_call_user_preference: on_call_user_preference;
-    x_1850095_pokenow_move: x_1850095_pokenow_move;
+    x_2270446_pokenow_move: x_2270446_pokenow_move;
     cmn_map_marker_click_action: cmn_map_marker_click_action;
     u_cmdb_qb_result_d3bda2a94c2c358b33baadf23f7d36b956043856: u_cmdb_qb_result_d3bda2a94c2c358b33baadf23f7d36b956043856;
     sysauto: sysauto;

@@ -1,13 +1,13 @@
 ;(function () {
-    var ATTR_TABLE = 'x_1850095_pokenow_attributes'
-    var TYPE_TABLE = 'x_1850095_pokenow_type'
-    var STAT_TABLE = 'x_1850095_pokenow_stat'
-    var MOVE_TABLE = 'x_1850095_pokenow_move'
-    var POKE_TYPE_TABLE = 'x_1850095_pokenow_poke_type'
-    var POKE_STAT_TABLE = 'x_1850095_pokenow_poke_stat'
-    var EFFECT_TABLE = 'x_1850095_pokenow_type_effectiveness'
-    var ITEM_TABLE = 'x_1850095_pokenow_item'
-    var ITEM_CATEGORY_TABLE = 'x_1850095_pokenow_item_category'
+    var ATTR_TABLE = 'x_2270446_pokenow_attributes'
+    var TYPE_TABLE = 'x_2270446_pokenow_type'
+    var STAT_TABLE = 'x_2270446_pokenow_stat'
+    var MOVE_TABLE = 'x_2270446_pokenow_move'
+    var POKE_TYPE_TABLE = 'x_2270446_pokenow_poke_type'
+    var POKE_STAT_TABLE = 'x_2270446_pokenow_poke_stat'
+    var EFFECT_TABLE = 'x_2270446_pokenow_type_effectiveness'
+    var ITEM_TABLE = 'x_2270446_pokenow_item'
+    var ITEM_CATEGORY_TABLE = 'x_2270446_pokenow_item_category'
 
     // Cap on how many of a Pokemon's known moves we'll fetch/check before
     // giving up on finding 4 usable ones - bounds worst-case REST calls per

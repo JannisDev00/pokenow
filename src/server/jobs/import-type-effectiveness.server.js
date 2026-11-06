@@ -1,6 +1,6 @@
 (function () {
-    var TYPE_TABLE = 'x_1850095_pokenow_type'
-    var EFFECT_TABLE = 'x_1850095_pokenow_type_effectiveness'
+    var TYPE_TABLE = 'x_2270446_pokenow_type'
+    var EFFECT_TABLE = 'x_2270446_pokenow_type_effectiveness'
 
     function fetchJson(functionName, params) {
         var rm = new sn_ws.RESTMessageV2('PokeAPI', functionName)

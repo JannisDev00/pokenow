@@ -1,11 +1,11 @@
 (function () {
-    var POKE_TABLE = 'x_1850095_pokenow_attributes';
-    var TYPE_TABLE = 'x_1850095_pokenow_type';
-    var STAT_TABLE = 'x_1850095_pokenow_stat';
-    var ABILITY_TABLE = 'x_1850095_pokenow_ability';
-    var POKE_TYPE_TABLE = 'x_1850095_pokenow_poke_type';
-    var POKE_STAT_TABLE = 'x_1850095_pokenow_poke_stat';
-    var POKE_ABILITY_TABLE = 'x_1850095_pokenow_poke_ability';
+    var POKE_TABLE = 'x_2270446_pokenow_attributes';
+    var TYPE_TABLE = 'x_2270446_pokenow_type';
+    var STAT_TABLE = 'x_2270446_pokenow_stat';
+    var ABILITY_TABLE = 'x_2270446_pokenow_ability';
+    var POKE_TYPE_TABLE = 'x_2270446_pokenow_poke_type';
+    var POKE_STAT_TABLE = 'x_2270446_pokenow_poke_stat';
+    var POKE_ABILITY_TABLE = 'x_2270446_pokenow_poke_ability';
 
     function fetchJson(functionName, params) {
         var rm = new sn_ws.RESTMessageV2('PokeAPI', functionName);
@@ -98,7 +98,7 @@
 
     var results = list.results;
 
-    var limitProp = gs.getProperty('x_1850095_pokenow.import.limit');
+    var limitProp = gs.getProperty('x_2270446_pokenow.import.limit');
     if (limitProp) {
         var limitNum = parseInt(limitProp, 10);
         if (!isNaN(limitNum) && limitNum > 0 && limitNum < results.length) {

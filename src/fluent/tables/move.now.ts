@@ -5,8 +5,8 @@ import { Table, StringColumn, IntegerColumn, ChoiceColumn, ReferenceColumn } fro
 // PokeAPI doesn't return move power/accuracy/type as part of a Pokemon's
 // own detail record, only the move's name, so per-move detail is fetched
 // and cached on demand rather than bulk-imported for all ~900 moves.
-export const x_1850095_pokenow_move = Table({
-    name: 'x_1850095_pokenow_move',
+export const x_2270446_pokenow_move = Table({
+    name: 'x_2270446_pokenow_move',
     label: 'Move',
     display: 'name',
     schema: {
@@ -22,7 +22,7 @@ export const x_1850095_pokenow_move = Table({
                 status: 'Status',
             },
         }),
-        type: ReferenceColumn({ label: 'Type', referenceTable: 'x_1850095_pokenow_type' }),
+        type: ReferenceColumn({ label: 'Type', referenceTable: 'x_2270446_pokenow_type' }),
         // From the move's meta object - which ailment it can inflict (if
         // any), how likely that is, and (for sleep/confusion) how many
         // turns it lasts. Only a subset of PokeAPI's ~22 ailments are

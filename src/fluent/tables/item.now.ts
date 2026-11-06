@@ -15,8 +15,8 @@ import {
 // filterable/reportable. held_by_pokemon and localized names aren't
 // imported, and effect/flavor_text keep only one representative English
 // entry rather than the full per-game-version history.
-export const x_1850095_pokenow_item = Table({
-    name: 'x_1850095_pokenow_item',
+export const x_2270446_pokenow_item = Table({
+    name: 'x_2270446_pokenow_item',
     label: 'Item',
     display: 'name',
     allowWebServiceAccess: true,
@@ -26,7 +26,7 @@ export const x_1850095_pokenow_item = Table({
         cost: IntegerColumn({ label: 'Cost' }),
         fling_power: IntegerColumn({ label: 'Fling Power' }),
         fling_effect: StringColumn({ label: 'Fling Effect', maxLength: 60 }),
-        category: ReferenceColumn({ label: 'Category', referenceTable: 'x_1850095_pokenow_item_category' }),
+        category: ReferenceColumn({ label: 'Category', referenceTable: 'x_2270446_pokenow_item_category' }),
         sprite: UrlColumn({ label: 'Sprite' }),
         effect: MultiLineTextColumn({ label: 'Effect' }),
         flavor_text: MultiLineTextColumn({ label: 'Flavor Text' }),
