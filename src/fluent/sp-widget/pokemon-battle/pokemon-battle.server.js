@@ -288,11 +288,24 @@
         gr.setValue('recent_battles', JSON.stringify(history))
         gr.update()
 
+        var ownName = capitalize(gr.getValue('name'))
+        var resultSummary
+        if (result === 'win') {
+            resultSummary = ownName + ' won'
+        } else if (result === 'loss') {
+            resultSummary = ownName + ' lost'
+        } else {
+            resultSummary = ownName + ' tied'
+        }
+
         var logGr = new GlideRecord(BATTLE_LOG_TABLE)
         logGr.initialize()
         logGr.setValue('pokemon', sysId)
+        logGr.setValue('pokemon_name', ownName)
         logGr.setValue('opponent_name', opponentName)
         logGr.setValue('result', result)
+        logGr.setValue('result_summary', resultSummary)
+        logGr.setValue('battle_datetime', new GlideDateTime().getValue())
         logGr.setValue('primary_type', gr.getValue('primary_type'))
         logGr.setValue('generation', gr.getValue('generation'))
         logGr.insert()
@@ -482,14 +495,12 @@
         return -1
     }
 
-    // Credits a personal win to every team member still standing when the
-    // match ends - members that already fainted got their loss recorded at
-    // the moment they fainted, so they're skipped here to avoid double-counting.
-    function creditTeamWin(teamIds, hpArr) {
+    // Credits a personal win to every member of the winning team, including
+    // ones that fainted along the way - a team win counts for the whole
+    // roster, not just whoever was still standing at the end.
+    function creditTeamWin(teamIds) {
         for (var i = 0; i < teamIds.length; i++) {
-            if (hpArr[i] > 0) {
-                updatePokemonRecord(teamIds[i], 'win', '4v4 Team Battle')
-            }
+            updatePokemonRecord(teamIds[i], 'win', '4v4 Team Battle')
         }
     }
 
@@ -1303,9 +1314,9 @@
         }
 
         if (teamWinner === 'A') {
-            creditTeamWin(teamAIds, hpArrA)
+            creditTeamWin(teamAIds)
         } else if (teamWinner === 'B') {
-            creditTeamWin(teamBIds, hpArrB)
+            creditTeamWin(teamBIds)
         }
 
         data.result = {

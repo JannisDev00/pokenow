@@ -45,6 +45,13 @@
         return tgr.next() ? tgr.getValue('type') : null
     }
 
+    function capitalize(str) {
+        if (!str) {
+            return str
+        }
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
+
     gs.info('PokeNow breakdown fields backfill: finding Pokemon without a generation...')
 
     var gr = new GlideRecord(ATTR_TABLE)
@@ -83,10 +90,10 @@
 
     gs.info('PokeNow breakdown fields backfill complete. Processed: ' + processed + ', Skipped: ' + skipped)
 
-    gs.info('PokeNow breakdown fields backfill: finding battle log rows without a generation...')
+    gs.info('PokeNow breakdown fields backfill: finding battle log rows without pokemon_name...')
 
     var logGr = new GlideRecord(BATTLE_LOG_TABLE)
-    logGr.addQuery('generation', '')
+    logGr.addQuery('pokemon_name', '')
     logGr.setLimit(2000)
     logGr.query()
 
@@ -100,6 +107,21 @@
                 logSkipped++
                 continue
             }
+
+            var ownName = capitalize(pgr.getValue('name'))
+            var result = logGr.getValue('result')
+            var resultSummary
+            if (result === 'win') {
+                resultSummary = ownName + ' won'
+            } else if (result === 'loss') {
+                resultSummary = ownName + ' lost'
+            } else {
+                resultSummary = ownName + ' tied'
+            }
+
+            logGr.setValue('pokemon_name', ownName)
+            logGr.setValue('result_summary', resultSummary)
+            logGr.setValue('battle_datetime', logGr.getValue('sys_created_on'))
             logGr.setValue('primary_type', pgr.getValue('primary_type'))
             logGr.setValue('generation', pgr.getValue('generation'))
             logGr.update()

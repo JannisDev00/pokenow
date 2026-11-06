@@ -1190,8 +1190,8 @@ export const pokemonLeaderboardDashboard = Dashboard({
                     component: LIST_SIMPLE,
                     componentProps: {
                         table: BATTLE_LOG_TABLE,
-                        columns: 'pokemon,opponent_name,result,sys_created_on',
-                        query: 'ORDERBYDESCsys_created_on',
+                        columns: 'pokemon_name,opponent_name,result_summary,battle_datetime',
+                        query: 'ORDERBYDESCbattle_datetime',
                         fixedQuery: '',
                         groupByField: '',
                         limit: 20,
