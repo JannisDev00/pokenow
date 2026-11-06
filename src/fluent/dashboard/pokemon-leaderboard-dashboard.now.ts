@@ -1,5 +1,6 @@
 import '@servicenow/sdk/global'
 import { Dashboard } from '@servicenow/sdk/core'
+import { pokemonWorkspace } from '../workspaces/pokemon/workspace.now'
 
 // "Normal" (Workspace/par_dashboard) version of the win leaderboard, built
 // the same way OOB dashboards like CMDB's "Configuration Item by
@@ -402,6 +403,11 @@ export const pokemonLeaderboardDashboard = Dashboard({
             ],
         },
     ],
-    visibilities: [],
+    visibilities: [
+        {
+            $id: Now.ID['pokemon-leaderboard-dashboard-visibility'],
+            experience: pokemonWorkspace,
+        },
+    ],
     permissions: [],
 })

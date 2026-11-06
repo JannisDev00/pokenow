@@ -125,6 +125,154 @@ declare global {
                         table: 'sp_widget'
                         id: 'e156b75fb53c464c98b5054ee7d9bdfd'
                     }
+                    'pokemon-workspace': {
+                        table: 'sys_ux_page_registry'
+                        id: '02b2f12168fd40329dac875411736e43'
+                    }
+                    'pokemon-workspace_sys_ux_app_config_workspace': {
+                        table: 'sys_ux_app_config'
+                        id: '5b476f506f154b59b6013616f0202dea'
+                    }
+                    'pokemon-workspace_sys_ux_app_route_home': {
+                        table: 'sys_ux_app_route'
+                        id: '267639c4c47f45ba98f7e868e66b5029'
+                    }
+                    'pokemon-workspace_sys_ux_app_route_list': {
+                        table: 'sys_ux_app_route'
+                        id: 'e6112f33ad524fbdaffede8f6b7107f9'
+                    }
+                    'pokemon-workspace_sys_ux_app_route_record': {
+                        table: 'sys_ux_app_route'
+                        id: 'f445ab6865f44cc4a9b909733355d507'
+                    }
+                    'pokemon-workspace_sys_ux_app_route_simple-list': {
+                        table: 'sys_ux_app_route'
+                        id: '97327b5654be43b1ae198d037d56bfab'
+                    }
+                    'pokemon-workspace_sys_ux_macroponent_record': {
+                        table: 'sys_ux_macroponent'
+                        id: 'fdb58b11742e43de86a3ffd0431a1429'
+                    }
+                    'pokemon-workspace_sys_ux_page_property_chrome_footer': {
+                        table: 'sys_ux_page_property'
+                        id: 'c4094df64fc84cdab44cec69f0543bd1'
+                    }
+                    'pokemon-workspace_sys_ux_page_property_chrome_header': {
+                        table: 'sys_ux_page_property'
+                        id: 'a44e1242ef6845a6a4873ea72c6c3574'
+                    }
+                    'pokemon-workspace_sys_ux_page_property_chrome_tab': {
+                        table: 'sys_ux_page_property'
+                        id: '6d87bf6322aa4dc7885810f9baf7c838'
+                    }
+                    'pokemon-workspace_sys_ux_page_property_chrome_toolbar': {
+                        table: 'sys_ux_page_property'
+                        id: '73acbdfa660443a7b8e69123740d3047'
+                    }
+                    'pokemon-workspace_sys_ux_page_property_listConfigId': {
+                        table: 'sys_ux_page_property'
+                        id: '7e3551419a404987ad1abab5ecdd1580'
+                    }
+                    'pokemon-workspace_sys_ux_page_property_view': {
+                        table: 'sys_ux_page_property'
+                        id: '0961fcc1d2f24cf2a69a5dbfba61334a'
+                    }
+                    'pokemon-workspace_sys_ux_page_property_wbApplicabilityConfigId': {
+                        table: 'sys_ux_page_property'
+                        id: '25fda645a1ea4524987965d257f43eac'
+                    }
+                    'pokemon-workspace_sys_ux_registry_m2m_category_unifiedNav': {
+                        table: 'sys_ux_registry_m2m_category'
+                        id: '42960261793a4341837c2df0a90b3be4'
+                    }
+                    'pokemon-workspace_sys_ux_screen_home': {
+                        table: 'sys_ux_screen'
+                        id: 'c07997d995b54fe9850c127fc1179745'
+                    }
+                    'pokemon-workspace_sys_ux_screen_list': {
+                        table: 'sys_ux_screen'
+                        id: '16da0dca076544718e900dcefa511686'
+                    }
+                    'pokemon-workspace_sys_ux_screen_record': {
+                        table: 'sys_ux_screen'
+                        id: '15758948d3a1476ebb20079e8ba27ccb'
+                    }
+                    'pokemon-workspace_sys_ux_screen_simple-list': {
+                        table: 'sys_ux_screen'
+                        id: 'a8658a5b98f047088529cc46848a5cab'
+                    }
+                    'pokemon-workspace_sys_ux_screen_type_home': {
+                        table: 'sys_ux_screen_type'
+                        id: 'cb8fbd04aa2442b99eafd1c92afa762e'
+                    }
+                    'pokemon-workspace_sys_ux_screen_type_list': {
+                        table: 'sys_ux_screen_type'
+                        id: 'd416ddddec97472b9f7d6489b28e0d5a'
+                    }
+                    'pokemon-workspace_sys_ux_screen_type_record': {
+                        table: 'sys_ux_screen_type'
+                        id: 'f4fc616bca69415c823b972389d5e165'
+                    }
+                    'pokemon-workspace_sys_ux_screen_type_simple-list': {
+                        table: 'sys_ux_screen_type'
+                        id: 'bdaf9836ded44c269ff16c48103d2ddb'
+                    }
+                    'pokemon-workspace-acl': {
+                        table: 'sys_security_acl'
+                        id: '8a431c6cc991415faec0aad9d941308b'
+                    }
+                    'pokemon-workspace-applicability': {
+                        table: 'sys_ux_applicability'
+                        id: '89f3f8c5aa3848a192f73de3a7010139'
+                    }
+                    'pokemon-workspace-category-battles': {
+                        table: 'sys_ux_list_category'
+                        id: '1b667fc430b04541b1db8b379b3c892e'
+                    }
+                    'pokemon-workspace-category-pokemon': {
+                        table: 'sys_ux_list_category'
+                        id: '86883a5c3132447da08b887e5e17b66d'
+                    }
+                    'pokemon-workspace-category-reference': {
+                        table: 'sys_ux_list_category'
+                        id: '74e06df16d074cbf85aa01f09e36e469'
+                    }
+                    'pokemon-workspace-list-battle-log': {
+                        table: 'sys_ux_list'
+                        id: 'e9e55e07bdf24c07bc346597bfd66b16'
+                    }
+                    'pokemon-workspace-list-battle-log-applicability': {
+                        table: 'sys_ux_applicability_m2m_list'
+                        id: '9da6893bcb404365a1bcdca356368d05'
+                    }
+                    'pokemon-workspace-list-config': {
+                        table: 'sys_ux_list_menu_config'
+                        id: '1d4740d48e6e472889eea950b46b53b5'
+                    }
+                    'pokemon-workspace-list-items': {
+                        table: 'sys_ux_list'
+                        id: '6ce110928db044f48ec14c506ec0a83e'
+                    }
+                    'pokemon-workspace-list-items-applicability': {
+                        table: 'sys_ux_applicability_m2m_list'
+                        id: '4e86d477a7be49d788109d88e8986e31'
+                    }
+                    'pokemon-workspace-list-moves': {
+                        table: 'sys_ux_list'
+                        id: '9f3a0b20c99b4b1d804aea1f4f202db5'
+                    }
+                    'pokemon-workspace-list-moves-applicability': {
+                        table: 'sys_ux_applicability_m2m_list'
+                        id: 'ea0dee3147ab4025b90fafb7c8075a83'
+                    }
+                    'pokemon-workspace-list-pokemon': {
+                        table: 'sys_ux_list'
+                        id: 'c1e2d2c4a60e4ea89b7478d61010ad2b'
+                    }
+                    'pokemon-workspace-list-pokemon-applicability': {
+                        table: 'sys_ux_applicability_m2m_list'
+                        id: '477d23809f6146ad845d8ac4d5e1f27e'
+                    }
                     'pokenow-app-menu': {
                         table: 'sys_app_application'
                         id: 'fdad2a283f71410b9a311e2f44427134'
@@ -1239,6 +1387,13 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_user_role'
+                        id: '77bcaeafbaa747fd8fcafe2b1e680ac6'
+                        key: {
+                            name: 'x_2270446_pokenow.user'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '78399ee5bb824e8193e50aad08930884'
                         key: {
@@ -1500,6 +1655,14 @@ declare global {
                             name: 'x_2270446_pokenow_attributes'
                             element: 'past_abilities'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'par_dashboard_visibility'
+                        id: '8bcc3a1f30484d2b8af6cbe20b371a96'
+                        key: {
+                            dashboard: 'cb67efa6fe554d9985346277ab546bde'
+                            experience: '02b2f12168fd40329dac875411736e43'
                         }
                     },
                     {
@@ -1984,6 +2147,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'b8801ba9cbbb4671a9042e4e831212f8'
+                        key: {
+                            sys_security_acl: '8a431c6cc991415faec0aad9d941308b'
+                            sys_user_role: {
+                                id: '77bcaeafbaa747fd8fcafe2b1e680ac6'
+                                key: {
+                                    name: 'x_2270446_pokenow.user'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'ba47134c4ee34b8fabe590f0c4fcc4b2'
                         key: {
@@ -2363,6 +2539,7 @@ declare global {
                     {
                         table: 'par_dashboard_visibility'
                         id: 'df8826a019c543b7803bad25347f5fb9'
+                        deleted: true
                         key: {
                             dashboard: 'cb67efa6fe554d9985346277ab546bde'
                             experience: '08c73d60537101100834ddeeff7b1287'
@@ -2503,6 +2680,24 @@ declare global {
                         id: 'f328702431184b4eb66c2a9c7c80300d'
                         key: {
                             name: 'x_2270446_pokenow_move'
+                        }
+                    },
+                    {
+                        table: 'sys_user_role_contains'
+                        id: 'f3e8cbac606a4399a4dd5700901f5b9c'
+                        key: {
+                            role: {
+                                id: '77bcaeafbaa747fd8fcafe2b1e680ac6'
+                                key: {
+                                    name: 'x_2270446_pokenow.user'
+                                }
+                            }
+                            contains: {
+                                id: '0a495ebc153045b2b6e411d338267e83'
+                                key: {
+                                    name: 'canvas_user'
+                                }
+                            }
                         }
                     },
                     {
