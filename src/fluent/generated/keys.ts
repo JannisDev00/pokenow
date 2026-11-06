@@ -101,6 +101,26 @@ declare global {
                         table: 'sp_widget'
                         id: '5b11ad905d064dcc896491b78efb01f2'
                     }
+                    'pokemon-leaderboard-dashboard': {
+                        table: 'par_dashboard'
+                        id: 'cb67efa6fe554d9985346277ab546bde'
+                    }
+                    'pokemon-leaderboard-dashboard-tab': {
+                        table: 'par_dashboard_tab'
+                        id: '174e8449cfe140abb47bd5fb16ec3abf'
+                    }
+                    'pokemon-leaderboard-dashboard-widget-all': {
+                        table: 'par_dashboard_widget'
+                        id: '90f2a8b4401a4ed2916c12a46d454ee2'
+                    }
+                    'pokemon-leaderboard-dashboard-widget-month': {
+                        table: 'par_dashboard_widget'
+                        id: 'a70b7c7771bf44dca0febd2d4536a885'
+                    }
+                    'pokemon-leaderboard-dashboard-widget-week': {
+                        table: 'par_dashboard_widget'
+                        id: 'ef66a8693a3049d4a0768de86c12fd4f'
+                    }
                     'pokemon-leaderboard-widget': {
                         table: 'sp_widget'
                         id: 'e156b75fb53c464c98b5054ee7d9bdfd'
@@ -669,6 +689,14 @@ declare global {
                         id: '312b00f5c1d643fda98be0a57e163b61'
                         key: {
                             name: 'x_2270446_pokenow_item'
+                        }
+                    },
+                    {
+                        table: 'par_dashboard_canvas'
+                        id: '31ff2fdbee4847f8aa19d9a415e43d22'
+                        key: {
+                            dashboard: 'cb67efa6fe554d9985346277ab546bde'
+                            dashboard_tab: '174e8449cfe140abb47bd5fb16ec3abf'
                         }
                     },
                     {
@@ -2330,6 +2358,14 @@ declare global {
                         id: 'df0d68586d504513bc0e7b07e08fca9f'
                         key: {
                             name: 'x_2270446_pokenow_poke_ability'
+                        }
+                    },
+                    {
+                        table: 'par_dashboard_visibility'
+                        id: 'df8826a019c543b7803bad25347f5fb9'
+                        key: {
+                            dashboard: 'cb67efa6fe554d9985346277ab546bde'
+                            experience: '08c73d60537101100834ddeeff7b1287'
                         }
                     },
                     {
