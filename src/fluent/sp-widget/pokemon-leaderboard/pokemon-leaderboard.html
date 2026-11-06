@@ -1,0 +1,48 @@
+<div class="panel panel-default sp-card pokemon-leaderboard-widget">
+    <div class="panel-heading sp-card-header">
+        <h3 class="panel-title sp-card-title">Pokemon Leaderboard</h3>
+    </div>
+    <div class="panel-body sp-card-body">
+
+        <div class="pokemon-leaderboard-tabs">
+            <button type="button"
+                    class="btn btn-default pokemon-leaderboard-tab-btn"
+                    ng-class="{'btn-primary': c.timeframe === 'all'}"
+                    ng-click="c.selectTimeframe('all')">All-Time</button>
+            <button type="button"
+                    class="btn btn-default pokemon-leaderboard-tab-btn"
+                    ng-class="{'btn-primary': c.timeframe === 'month'}"
+                    ng-click="c.selectTimeframe('month')">This Month</button>
+            <button type="button"
+                    class="btn btn-default pokemon-leaderboard-tab-btn"
+                    ng-class="{'btn-primary': c.timeframe === 'week'}"
+                    ng-click="c.selectTimeframe('week')">This Week</button>
+        </div>
+
+        <div class="pokemon-leaderboard-empty" ng-if="!c.loading && c.leaders.length === 0">
+            No battles recorded for this timeframe yet.
+        </div>
+
+        <table class="table pokemon-leaderboard-table" ng-if="c.leaders.length">
+            <thead>
+                <tr>
+                    <th class="pokemon-leaderboard-rank-col">#</th>
+                    <th></th>
+                    <th>Pokemon</th>
+                    <th class="pokemon-leaderboard-wins-col">Wins</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="p in c.leaders track by p.sys_id">
+                    <td class="pokemon-leaderboard-rank-col">{{p.rank}}</td>
+                    <td class="pokemon-leaderboard-sprite-col">
+                        <img ng-if="p.sprite" ng-src="{{p.sprite}}" alt="{{p.name}}" class="pokemon-leaderboard-sprite">
+                    </td>
+                    <td class="pokemon-leaderboard-name-col">{{p.name}}</td>
+                    <td class="pokemon-leaderboard-wins-col">{{p.wins}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

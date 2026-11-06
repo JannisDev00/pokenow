@@ -25,3 +25,19 @@ export const pokenowBattleModule = Record({
         order: 100,
     },
 })
+
+// Module: direct link to the win leaderboard portal page.
+export const pokenowLeaderboardModule = Record({
+    $id: Now.ID['pokenow-app-module-leaderboard'],
+    table: 'sys_app_module',
+    data: {
+        title: 'Leaderboard',
+        application: pokenowMenu,
+        link_type: 'DIRECT',
+        query: 'pokenow?id=pokenow-leaderboard',
+        window_name: 'pokenow_leaderboard',
+        hint: 'View the Pokemon win leaderboard',
+        active: true,
+        order: 200,
+    },
+})

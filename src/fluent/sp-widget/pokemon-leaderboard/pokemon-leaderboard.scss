@@ -1,0 +1,44 @@
+.pokemon-leaderboard-widget {
+    .pokemon-leaderboard-tabs {
+        margin-bottom: 15px;
+        text-align: center;
+
+        .pokemon-leaderboard-tab-btn {
+            margin: 0 4px;
+            min-width: 110px;
+        }
+    }
+
+    .pokemon-leaderboard-empty {
+        text-align: center;
+        opacity: 0.6;
+        padding: 20px 0;
+    }
+
+    .pokemon-leaderboard-table {
+        .pokemon-leaderboard-rank-col {
+            width: 40px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .pokemon-leaderboard-sprite-col {
+            width: 48px;
+        }
+
+        .pokemon-leaderboard-sprite {
+            max-width: 40px;
+            max-height: 40px;
+        }
+
+        .pokemon-leaderboard-name-col {
+            text-transform: capitalize;
+        }
+
+        .pokemon-leaderboard-wins-col {
+            width: 70px;
+            text-align: right;
+            font-weight: bold;
+        }
+    }
+}

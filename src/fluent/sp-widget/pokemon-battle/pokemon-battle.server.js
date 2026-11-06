@@ -8,6 +8,7 @@
     var EFFECT_TABLE = 'x_2270446_pokenow_type_effectiveness'
     var ITEM_TABLE = 'x_2270446_pokenow_item'
     var ITEM_CATEGORY_TABLE = 'x_2270446_pokenow_item_category'
+    var BATTLE_LOG_TABLE = 'x_2270446_pokenow_battle_log'
 
     // Cap on how many of a Pokemon's known moves we'll fetch/check before
     // giving up on finding 4 usable ones - bounds worst-case REST calls per
@@ -286,6 +287,13 @@
         gr.setValue('losses', losses)
         gr.setValue('recent_battles', JSON.stringify(history))
         gr.update()
+
+        var logGr = new GlideRecord(BATTLE_LOG_TABLE)
+        logGr.initialize()
+        logGr.setValue('pokemon', sysId)
+        logGr.setValue('opponent_name', opponentName)
+        logGr.setValue('result', result)
+        logGr.insert()
 
         return { wins: wins, losses: losses, recentBattles: history }
     }
