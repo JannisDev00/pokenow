@@ -59,28 +59,29 @@
         position: relative;
         overflow: hidden;
         margin: 0 0 15px;
-        padding: 36px 20px 28px;
+        min-height: 320px;
+        padding: 48px 20px 36px;
         border-radius: 12px;
         background: linear-gradient(180deg, #7ec8f2 0%, #bfe8c9 55%, #8fd19e 100%);
 
         .pokemon-battle-mode-select-decor {
             position: absolute;
-            bottom: -16px;
-            width: 150px;
-            max-width: 32%;
+            bottom: 10px;
+            width: 230px;
+            max-width: 34%;
             height: auto;
-            opacity: 0.3;
+            opacity: 0.5;
             pointer-events: none;
             z-index: 0;
             filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.15));
         }
 
         .pokemon-battle-mode-select-decor-left {
-            left: -16px;
+            left: 10px;
         }
 
         .pokemon-battle-mode-select-decor-right {
-            right: -16px;
+            right: 10px;
             transform: scaleX(-1);
         }
 
