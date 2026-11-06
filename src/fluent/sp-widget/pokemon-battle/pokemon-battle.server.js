@@ -253,8 +253,13 @@
     }
 
     // Increments the win/loss counter for the given result and prepends a
-    // battle summary to recent_battles, capped at the 5 most recent.
-    function updatePokemonRecord(sysId, result, opponentName) {
+    // battle summary to recent_battles, capped at the 5 most recent. Always
+    // updates this Pokemon's own record; logBattle (default true) controls
+    // whether a battle_log row is also written - 1v1 calls this once per
+    // side per battle and only wants one shared row (see the 'turn' handler
+    // below), while 4v4 faint/team-win calls each represent a genuinely
+    // distinct event and always want their own row.
+    function updatePokemonRecord(sysId, result, opponentName, logBattle) {
         var gr = new GlideRecord(ATTR_TABLE)
         if (!gr.get(sysId)) {
             return null
@@ -288,27 +293,29 @@
         gr.setValue('recent_battles', JSON.stringify(history))
         gr.update()
 
-        var ownName = capitalize(gr.getValue('name'))
-        var resultSummary
-        if (result === 'win') {
-            resultSummary = ownName + ' won'
-        } else if (result === 'loss') {
-            resultSummary = ownName + ' lost'
-        } else {
-            resultSummary = ownName + ' tied'
-        }
+        if (logBattle === undefined || logBattle) {
+            var ownName = capitalize(gr.getValue('name'))
+            var resultSummary
+            if (result === 'win') {
+                resultSummary = ownName + ' won'
+            } else if (result === 'loss') {
+                resultSummary = ownName + ' lost'
+            } else {
+                resultSummary = ownName + ' tied'
+            }
 
-        var logGr = new GlideRecord(BATTLE_LOG_TABLE)
-        logGr.initialize()
-        logGr.setValue('pokemon', sysId)
-        logGr.setValue('pokemon_name', ownName)
-        logGr.setValue('opponent_name', opponentName)
-        logGr.setValue('result', result)
-        logGr.setValue('result_summary', resultSummary)
-        logGr.setValue('battle_datetime', new GlideDateTime().getValue())
-        logGr.setValue('primary_type', gr.getValue('primary_type'))
-        logGr.setValue('generation', gr.getValue('generation'))
-        logGr.insert()
+            var logGr = new GlideRecord(BATTLE_LOG_TABLE)
+            logGr.initialize()
+            logGr.setValue('pokemon', sysId)
+            logGr.setValue('pokemon_name', ownName)
+            logGr.setValue('opponent_name', opponentName)
+            logGr.setValue('result', result)
+            logGr.setValue('result_summary', resultSummary)
+            logGr.setValue('battle_datetime', new GlideDateTime().getValue())
+            logGr.setValue('primary_type', gr.getValue('primary_type'))
+            logGr.setValue('generation', gr.getValue('generation'))
+            logGr.insert()
+        }
 
         return { wins: wins, losses: losses, recentBattles: history }
     }
@@ -1037,8 +1044,14 @@
                 resultA = 'loss'
                 resultB = 'win'
             }
-            aRecord = updatePokemonRecord(a2.sys_id, resultA, b2.name)
-            bRecord = updatePokemonRecord(b2.sys_id, resultB, a2.name)
+            // Write exactly one battle_log row per 1v1 battle instead of a
+            // mirrored pair - always from the winner's side (so "Wins by
+            // Pokemon" still sees a 'win' row for whoever actually won),
+            // or arbitrarily A's side for a tie.
+            var aLogs = resultA === 'win' || winner === 'Tie'
+            var bLogs = resultB === 'win'
+            aRecord = updatePokemonRecord(a2.sys_id, resultA, b2.name, aLogs)
+            bRecord = updatePokemonRecord(b2.sys_id, resultB, a2.name, bLogs)
         }
 
         data.result = {
