@@ -52,6 +52,123 @@
         }
     }
 
+    // Hero treatment for the top-level 1v1/4v4 chooser only - the nested
+    // "Vs AI" / "Both teams by me" chooser reuses pokemon-battle-mode-select
+    // for its base margin/alignment but skips this modifier, staying plain.
+    .pokemon-battle-mode-select-hero {
+        position: relative;
+        overflow: hidden;
+        margin: 0 0 15px;
+        padding: 36px 20px 28px;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #7ec8f2 0%, #bfe8c9 55%, #8fd19e 100%);
+
+        .pokemon-battle-mode-select-decor {
+            position: absolute;
+            bottom: -16px;
+            width: 150px;
+            max-width: 32%;
+            height: auto;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+            filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.15));
+        }
+
+        .pokemon-battle-mode-select-decor-left {
+            left: -16px;
+        }
+
+        .pokemon-battle-mode-select-decor-right {
+            right: -16px;
+            transform: scaleX(-1);
+        }
+
+        .pokemon-battle-mode-select-title {
+            position: relative;
+            z-index: 1;
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+        }
+
+        .pokemon-battle-mode-select-subtitle {
+            position: relative;
+            z-index: 1;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+            margin-bottom: 24px;
+        }
+
+        .pokemon-battle-mode-cards {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+    }
+
+    .pokemon-battle-mode-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 190px;
+        padding: 18px 16px 16px;
+        background: #fff;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        transition:
+            transform 0.15s ease,
+            box-shadow 0.15s ease;
+
+        &:hover,
+        &:focus {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+            outline: none;
+        }
+
+        .pokemon-battle-mode-card-sprite {
+            height: 84px;
+            width: 84px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .pokemon-battle-mode-card-sprite-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2px;
+            width: 84px;
+            height: 84px;
+            margin-bottom: 10px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .pokemon-battle-mode-card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: $brand-primary;
+        }
+
+        .pokemon-battle-mode-card-subtitle {
+            font-size: $font-size-small;
+            color: #666;
+            margin-top: 2px;
+            text-align: center;
+        }
+    }
+
     .pokemon-battle-back {
         margin-bottom: 10px;
     }

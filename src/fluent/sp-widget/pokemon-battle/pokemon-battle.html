@@ -4,9 +4,28 @@
     </div>
     <div class="panel-body sp-card-body">
 
-        <div class="pokemon-battle-mode-select" ng-if="!c.mode">
-            <button type="button" class="btn btn-primary pokemon-battle-mode-btn" ng-click="c.selectMode('1v1')">1 vs 1</button>
-            <button type="button" class="btn btn-primary pokemon-battle-mode-btn" ng-click="c.selectMode('4v4')">4 vs 4</button>
+        <div class="pokemon-battle-mode-select pokemon-battle-mode-select-hero" ng-if="!c.mode">
+            <img class="pokemon-battle-mode-select-decor pokemon-battle-mode-select-decor-left" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" alt="">
+            <img class="pokemon-battle-mode-select-decor pokemon-battle-mode-select-decor-right" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png" alt="">
+            <div class="pokemon-battle-mode-select-title">Choose Your Battle</div>
+            <div class="pokemon-battle-mode-select-subtitle">Pick a mode to get started</div>
+            <div class="pokemon-battle-mode-cards">
+                <button type="button" class="pokemon-battle-mode-card" ng-click="c.selectMode('1v1')">
+                    <img class="pokemon-battle-mode-card-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="">
+                    <span class="pokemon-battle-mode-card-title">1 vs 1</span>
+                    <span class="pokemon-battle-mode-card-subtitle">Classic head-to-head battle</span>
+                </button>
+                <button type="button" class="pokemon-battle-mode-card" ng-click="c.selectMode('4v4')">
+                    <span class="pokemon-battle-mode-card-sprite-grid">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" alt="">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png" alt="">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png" alt="">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="">
+                    </span>
+                    <span class="pokemon-battle-mode-card-title">4 vs 4</span>
+                    <span class="pokemon-battle-mode-card-subtitle">Full team battle</span>
+                </button>
+            </div>
         </div>
 
         <div class="sp-alert sp-alert-danger" ng-if="c.errorMsg" role="alert">
