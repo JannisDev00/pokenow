@@ -4,18 +4,24 @@ import { pokemonWorkspace } from '../workspaces/pokemon/workspace.now'
 
 // "Normal" (Workspace/par_dashboard) version of the win leaderboard, built
 // the same way OOB dashboards like CMDB's "Configuration Item by
-// Manufacturer" widget are: a Horizontal bar macroponent whose
+// Manufacturer" widget are: a Vertical bar macroponent whose
 // componentProps bind straight to a table (x_2270446_pokenow_battle_log),
 // grouped by pokemon and counted - no Performance Analytics indicator
 // needed. See the Service Portal leaderboard widget
 // (sp-widget/pokemon-leaderboard) for the equivalent portal-page version;
 // this is the same data, grouped live from the same battle_log table.
 //
+// additionalGroupByConfig lets the viewer switch the breakdown from "by
+// Pokemon" to "by Type" or "by Generation" via a dropdown on the widget
+// itself (dot-walked off the pokemon reference field) - confirmed against
+// a real OOB widget's component_props on this instance (Knowledge Use
+// dashboard), since Fluent's own docs don't cover this property.
+//
 // Fluent files are a restricted declarative DSL (statically parsed, not
 // executed), so each widget's componentProps is a fully literal object -
 // no helper functions, string concatenation, or ternaries allowed.
 const BATTLE_LOG_TABLE = 'x_2270446_pokenow_battle_log'
-const HORIZONTAL_BAR = '85855283b7e03010097cb81cde11a91d'
+const VERTICAL_BAR = '23051643b7e03010097cb81cde11a910'
 
 export const pokemonLeaderboardDashboard = Dashboard({
     $id: Now.ID['pokemon-leaderboard-dashboard'],
@@ -28,7 +34,7 @@ export const pokemonLeaderboardDashboard = Dashboard({
             widgets: [
                 {
                     $id: Now.ID['pokemon-leaderboard-dashboard-widget-all'],
-                    component: HORIZONTAL_BAR,
+                    component: VERTICAL_BAR,
                     componentProps: {
                         configVersion: '23.0.0-ci-SNAPSHOT',
                         yAxisHidden: false,
@@ -49,6 +55,11 @@ export const pokemonLeaderboardDashboard = Dashboard({
                         showOverlappingLabels: false,
                         colorConfig: { type: 'default' },
                         newReporting: false,
+                        showAdditionalGroupBySelector: true,
+                        additionalGroupByConfig: [
+                            { id: 'pokemon.primary_type', label: 'Type' },
+                            { id: 'pokemon.generation', label: 'Generation' },
+                        ],
                         dataSources: [
                             {
                                 isDatabaseView: false,
@@ -57,7 +68,7 @@ export const pokemonLeaderboardDashboard = Dashboard({
                                 sourceType: 'table',
                                 tableOrViewName: BATTLE_LOG_TABLE,
                                 filterQuery: 'result=win',
-                                preferredVisualizations: [HORIZONTAL_BAR],
+                                preferredVisualizations: [VERTICAL_BAR],
                                 id: 'battle-log-all-ds',
                                 dataCategories: ['trend', 'group', 'simple'],
                             },
@@ -152,7 +163,7 @@ export const pokemonLeaderboardDashboard = Dashboard({
                 },
                 {
                     $id: Now.ID['pokemon-leaderboard-dashboard-widget-month'],
-                    component: HORIZONTAL_BAR,
+                    component: VERTICAL_BAR,
                     componentProps: {
                         configVersion: '23.0.0-ci-SNAPSHOT',
                         yAxisHidden: false,
@@ -173,6 +184,11 @@ export const pokemonLeaderboardDashboard = Dashboard({
                         showOverlappingLabels: false,
                         colorConfig: { type: 'default' },
                         newReporting: false,
+                        showAdditionalGroupBySelector: true,
+                        additionalGroupByConfig: [
+                            { id: 'pokemon.primary_type', label: 'Type' },
+                            { id: 'pokemon.generation', label: 'Generation' },
+                        ],
                         dataSources: [
                             {
                                 isDatabaseView: false,
@@ -182,7 +198,7 @@ export const pokemonLeaderboardDashboard = Dashboard({
                                 tableOrViewName: BATTLE_LOG_TABLE,
                                 filterQuery:
                                     'result=win^sys_created_onONThis Month@javascript:gs.beginningOfThisMonth()@javascript:gs.endOfThisMonth()',
-                                preferredVisualizations: [HORIZONTAL_BAR],
+                                preferredVisualizations: [VERTICAL_BAR],
                                 id: 'battle-log-month-ds',
                                 dataCategories: ['trend', 'group', 'simple'],
                             },
@@ -277,7 +293,7 @@ export const pokemonLeaderboardDashboard = Dashboard({
                 },
                 {
                     $id: Now.ID['pokemon-leaderboard-dashboard-widget-week'],
-                    component: HORIZONTAL_BAR,
+                    component: VERTICAL_BAR,
                     componentProps: {
                         configVersion: '23.0.0-ci-SNAPSHOT',
                         yAxisHidden: false,
@@ -298,6 +314,11 @@ export const pokemonLeaderboardDashboard = Dashboard({
                         showOverlappingLabels: false,
                         colorConfig: { type: 'default' },
                         newReporting: false,
+                        showAdditionalGroupBySelector: true,
+                        additionalGroupByConfig: [
+                            { id: 'pokemon.primary_type', label: 'Type' },
+                            { id: 'pokemon.generation', label: 'Generation' },
+                        ],
                         dataSources: [
                             {
                                 isDatabaseView: false,
@@ -307,7 +328,7 @@ export const pokemonLeaderboardDashboard = Dashboard({
                                 tableOrViewName: BATTLE_LOG_TABLE,
                                 filterQuery:
                                     'result=win^sys_created_onONThis Week@javascript:gs.beginningOfThisWeek()@javascript:gs.endOfThisWeek()',
-                                preferredVisualizations: [HORIZONTAL_BAR],
+                                preferredVisualizations: [VERTICAL_BAR],
                                 id: 'battle-log-week-ds',
                                 dataCategories: ['trend', 'group', 'simple'],
                             },

@@ -6,6 +6,7 @@ import {
     UrlColumn,
     JsonColumn,
     HtmlColumn,
+    ReferenceColumn,
 } from '@servicenow/sdk/core'
 
 // One row per Pokemon, one column per top-level attribute returned by the
@@ -51,5 +52,14 @@ export const x_2270446_pokenow_attributes = Table({
         // Up to 5 most-recent battle outcomes, newest first:
         // [{ opponent, result: 'win'|'loss'|'tie', date }, ...]
         recent_battles: JsonColumn({ label: 'Recent Battles' }),
+        // Derived from the species URL's trailing national dex number (fixed
+        // generation ID ranges), not PokeAPI's generation field directly -
+        // avoids an extra API call per species. See
+        // import-pokemon-breakdown-fields.now.ts.
+        generation: IntegerColumn({ label: 'Generation' }),
+        // Slot-1 entry from x_2270446_pokenow_poke_type, for dual-type
+        // Pokemon. A single reference field (rather than the full M2M type
+        // list) so dashboards can group/sort by it directly.
+        primary_type: ReferenceColumn({ label: 'Primary Type', referenceTable: 'x_2270446_pokenow_type' }),
     },
 })

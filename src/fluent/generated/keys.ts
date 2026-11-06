@@ -25,6 +25,10 @@ declare global {
                         table: 'sysauto_script'
                         id: '20700e1e2fff440691e2a028b5afcd42'
                     }
+                    'import-pokemon-breakdown-fields': {
+                        table: 'sysauto_script'
+                        id: '3ab55bb2f9fd4ad1b6788a3f16d6910d'
+                    }
                     'import-pokemon-images': {
                         table: 'sysauto_script'
                         id: 'd4beebe485dc472994b7ee2be1096cef'
@@ -328,6 +332,10 @@ declare global {
                     'src_server_jobs_import-pokemon_server_js': {
                         table: 'sys_module'
                         id: '2cb9414a14e74adbb239faaf2b23c3c6'
+                    }
+                    'src_server_jobs_import-pokemon-breakdown-fields_server_js': {
+                        table: 'sys_module'
+                        id: '3c0db0b020174b4581993522ba68a29e'
                     }
                     'src_server_jobs_import-pokemon-images_server_js': {
                         table: 'sys_module'
@@ -925,6 +933,14 @@ declare global {
                             value: 'status'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '39fd4cba990645499700c671fef1475d'
+                        key: {
+                            name: 'x_2270446_pokenow_attributes'
+                            element: 'primary_type'
                         }
                     },
                     {
@@ -1694,6 +1710,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '901aa1475db841b59243fd62a0923eb9'
+                        key: {
+                            name: 'x_2270446_pokenow_attributes'
+                            element: 'primary_type'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '9131cbc6dab344d2bd3636fe464a650c'
                         key: {
@@ -2253,6 +2278,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'c352f2282674485a9d73dce1294f33a1'
+                        key: {
+                            name: 'x_2270446_pokenow_attributes'
+                            element: 'generation'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_rest_message_fn'
                         id: 'c45003cf589a485ab74cb451e7bdcb16'
                         key: {
@@ -2736,6 +2770,14 @@ declare global {
                             name: 'x_2270446_pokenow_poke_type'
                             element: 'NULL'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'f8856552f8a048348a069edb67862292'
+                        key: {
+                            name: 'x_2270446_pokenow_attributes'
+                            element: 'generation'
                         }
                     },
                     {
