@@ -8,18 +8,26 @@ api.controller = function ($timeout) {
     // ---- Pokemon search (1v1 pickers + 4v4 team slots) ----
     var MAX_SEARCH_RESULTS = 20
 
+    // Names starting with the query rank first (so typing "f" surfaces
+    // Farfetch'd/Flareon, not "azelf" just because it happens to contain an
+    // f), then other substring matches fill any remaining slots.
     function filterPokemonList(query) {
         if (!query) {
             return []
         }
         var q = query.toLowerCase()
-        var matches = []
-        for (var i = 0; i < c.data.pokemonList.length && matches.length < MAX_SEARCH_RESULTS; i++) {
-            if (c.data.pokemonList[i].name.toLowerCase().indexOf(q) !== -1) {
-                matches.push(c.data.pokemonList[i])
+        var startsWith = []
+        var contains = []
+        for (var i = 0; i < c.data.pokemonList.length; i++) {
+            var name = c.data.pokemonList[i].name.toLowerCase()
+            var idx = name.indexOf(q)
+            if (idx === 0) {
+                startsWith.push(c.data.pokemonList[i])
+            } else if (idx > 0 && startsWith.length + contains.length < MAX_SEARCH_RESULTS) {
+                contains.push(c.data.pokemonList[i])
             }
         }
-        return matches
+        return startsWith.concat(contains).slice(0, MAX_SEARCH_RESULTS)
     }
 
     function shuffledCopy(list) {
