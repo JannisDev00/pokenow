@@ -197,11 +197,70 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '0ac44bb57056496086247171b849764a'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'image_html'
+                            position: '0'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_section'
+                        id: '0aef0a2a1df045bd93692c891a72b8be'
+                        key: {
+                            name: 'x_2270446_pokenow_attributes'
+                            caption: 'Pokemon'
+                            view: {
+                                id: 'Default view'
+                                key: {
+                                    name: 'NULL'
+                                }
+                            }
+                            sys_domain: 'global'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '0bb5468ad1a048afa88bee98982d3f6e'
                         key: {
                             name: 'x_2270446_pokenow_move'
                             element: 'power'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '0bc4eff256b34eb2b8ce7706119503f4'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'name'
+                            position: '2'
                         }
                     },
                     {
@@ -214,11 +273,55 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '1081dc38eb0742d88bff52c6e83ea142'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'cries'
+                            position: '17'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '10f2a5c64657472aa10f1c21d7a3fd95'
                         key: {
                             name: 'x_2270446_pokenow_move'
                             element: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '11669addb6e24cf0a672392864691fb6'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'forms'
+                            position: '18'
                         }
                     },
                     {
@@ -239,11 +342,69 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_form'
+                        id: '13d7bada032843deac565863e7fdf32d'
+                        key: {
+                            name: 'x_2270446_pokenow_attributes'
+                            view: {
+                                id: 'Default view'
+                                key: {
+                                    name: 'NULL'
+                                }
+                            }
+                            sys_domain: 'global'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '13e82474ac6d45be8a025af52919396e'
                         key: {
                             name: 'x_2270446_pokenow_item'
                             element: 'effect'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '141819bf247d40c79e3cbf12b80f8800'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'height'
+                            position: '4'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '17969be9090c4be4ae6a7f9cfd6ab65d'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'species'
+                            position: '15'
                         }
                     },
                     {
@@ -382,6 +543,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '272e98d60da24da5929fcd495a4f0381'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'location_area_encounters'
+                            position: '10'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '28909b8d2a8f46d8a715290a3356b6fb'
                         deleted: true
@@ -453,6 +636,28 @@ declare global {
                         id: '3295c880f9564333aab9818015f8425b'
                         key: {
                             name: 'x_2270446_pokenow_type'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '33035f1f4c7f40caa6ff65e0670db744'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'wins'
+                            position: '11'
                         }
                     },
                     {
@@ -532,6 +737,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '40ac5de86f2f43f4821a514a1ac4fa86'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'past_stats'
+                            position: '23'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '4829934bda0c46928196cc39294f8fcb'
                         key: {
@@ -549,11 +776,55 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '4a98bdde68ff4027860a49f966d2514d'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'past_abilities'
+                            position: '22'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '4b738021d8ef4f34bb0b1c188308cb2e'
                         key: {
                             name: 'x_2270446_pokenow_item_category'
                             element: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '4c6a7aebb2954769a0e6db27e650642d'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'losses'
+                            position: '12'
                         }
                     },
                     {
@@ -734,6 +1005,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '660911f7aa5b4512837b42279c9e7e92'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'game_indices'
+                            position: '19'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '69bd0f469cca4b79b4cc23169bcb19ca'
                         key: {
@@ -850,6 +1143,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '78399ee5bb824e8193e50aad08930884'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'recent_battles'
+                            position: '14'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '788c3c7781bb49418054453f627c7de9'
                         key: {
@@ -890,6 +1205,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '7a504c8326224395a5d0a69d611e6c90'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'id'
+                            position: '3'
+                        }
+                    },
+                    {
                         table: 'ua_table_licensing_config'
                         id: '7b0a34c04188476b912b59a3c300a814'
                         key: {
@@ -927,6 +1264,28 @@ declare global {
                             name: 'x_2270446_pokenow_attributes'
                             element: 'order'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '7e67f41446a442228f0db8bdb875f8ce'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.begin_split'
+                            position: '1'
                         }
                     },
                     {
@@ -1003,6 +1362,28 @@ declare global {
                         key: {
                             name: 'x_2270446_pokenow_poke_ability'
                             element: 'is_hidden'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '8a9bf95a146942f180aba83b6d6aef74'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'is_default'
+                            position: '9'
                         }
                     },
                     {
@@ -1086,6 +1467,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '97c1381e8261462c982e850d3a661949'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'base_experience'
+                            position: '6'
+                        }
+                    },
+                    {
                         table: 'sys_db_object'
                         id: '97f9f593fb794073b392e00caca0cbe7'
                         key: {
@@ -1098,6 +1501,28 @@ declare global {
                         key: {
                             name: 'x_2270446_pokenow_attributes'
                             element: 'forms'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '989f94b9882f40b9bb9b283d73850f1a'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'past_types'
+                            position: '24'
                         }
                     },
                     {
@@ -1174,6 +1599,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '9f91a5b49acf42a88f23a79dd42e204f'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'held_items'
+                            position: '20'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'a0501897d0dc4193b337446b5664eadb'
                         key: {
@@ -1187,6 +1634,28 @@ declare global {
                         key: {
                             name: 'x_2270446_pokenow_attributes'
                             element: 'location_area_encounters'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'a0d7b8138995423aa94f43445b13763e'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'moves'
+                            position: '21'
                         }
                     },
                     {
@@ -1225,6 +1694,28 @@ declare global {
                         id: 'a3fd0b2edd8e445cb84e529008b87e6a'
                         key: {
                             name: 'x_2270446_pokenow_item_category'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'a5843ff77afe45cb83c0a71fbe0a56ce'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.split'
+                            position: '7'
                         }
                     },
                     {
@@ -1279,6 +1770,28 @@ declare global {
                         key: {
                             name: 'x_2270446_pokenow_item_attribute_map'
                             element: 'attribute'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'ae64816bee444a879da0e1b7f7a08db6'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.end_split'
+                            position: '13'
                         }
                     },
                     {
@@ -1500,12 +2013,56 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: 'cdf1f14960c8475aac428b963694f99e'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'weight'
+                            position: '5'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'cf77392b6ab34bfe8cffa62cc234c088'
                         key: {
                             name: 'x_2270446_pokenow_item_attribute_map'
                             element: 'item'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'cfc4187dc10f44acadf29a974dd435f4'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'sprites'
+                            position: '16'
                         }
                     },
                     {
@@ -1592,6 +2149,39 @@ declare global {
                         key: {
                             name: 'x_2270446_pokenow_move'
                             element: 'accuracy'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_form_section'
+                        id: 'dede3fb4ce6846b4a71e1df733a5adbb'
+                        key: {
+                            sys_ui_form: {
+                                id: '13d7bada032843deac565863e7fdf32d'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
                         }
                     },
                     {
@@ -1688,6 +2278,28 @@ declare global {
                             name: 'x_2270446_pokenow_attributes'
                             element: 'location_area_encounters'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'f05b4508afb84997b5e4265bdf105b6b'
+                        key: {
+                            sys_ui_section: {
+                                id: '0aef0a2a1df045bd93692c891a72b8be'
+                                key: {
+                                    name: 'x_2270446_pokenow_attributes'
+                                    caption: 'Pokemon'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'order'
+                            position: '8'
                         }
                     },
                     {
